@@ -1,0 +1,12 @@
+# Please change the name of this lesson (and, then, delete this comment).
+# All of the following should have the same name
+#   - The lesson folder.
+#   - The lesson markdown file, and the ignored file, below.
+#   - The title, below.
+---
+title: "React Rails Monolith"
+type: "challenge"  # challenge, exercise, article, video
+description: "Putting all the tech together!"
+tags: "react rails"
+ignore:
+- "react-rails-monolith.md"
