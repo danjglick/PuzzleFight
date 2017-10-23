@@ -3,7 +3,10 @@ import GridContainer from '../containers/GridContainer.js';
 
 const App = () => {
   return(
-    <GridContainer />
+    <div>
+      <h1>PuzzleFight</h1>
+      <GridContainer />
+    </div>
   );
 };
 

@@ -1,25 +1,8 @@
-// @import "*";
-// 
-// #grid {
-//   display: grid;
-//   grid-template-columns: 1fr 1fr 1fr;
-//   grid-template-rows: 1fr 1fr 1fr;
-// }
-// 
-// .box {
-//   border: medium solid black;
-// }
-// 
-// 
-// #box1 {
-//   display: inline-block;
-//   grid-area: 3 / 3;
-// }
-
 .grid {
   float: left;
-  width: 30%;
-  padding-bottom: 30%;
+  width: 12%;
+  height: 0;
+  padding-bottom: 12%;
   margin: 1.66%;
   background-color: #B19CD9;
 }
