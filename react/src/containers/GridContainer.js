@@ -1,5 +1,3 @@
-// make state hash an array tied to key grid
-
 import React from 'react';
 
 class GridContainer extends React.Component {
@@ -20,6 +18,7 @@ class GridContainer extends React.Component {
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.randomizeSpot = this.randomizeSpot.bind(this);
 	};	
+	
 	
 	randomizeSpot() {
 		this.currentScore = 0;
@@ -83,6 +82,7 @@ class GridContainer extends React.Component {
 			};	
 			console.log(this.numBlues);
 			console.log(this.winner);
+			
 		//down		
 		} else if(e.keyCode == 40) {
 			for(var key in this.state) {
@@ -103,6 +103,7 @@ class GridContainer extends React.Component {
 				this.setState(this.emptyGrid);
 				this.currentScore = 0;
 			};	
+			
 		//right		
 		} else if(e.keyCode == 39) {
 			for(var key in this.state) {
@@ -123,6 +124,7 @@ class GridContainer extends React.Component {
 				this.setState(this.emptyGrid);
 				this.currentScore = 0;
 			};
+			
 		//left
 		} else if(e.keyCode == 37) {
 			for(var key in this.state) {
@@ -194,3 +196,4 @@ class GridContainer extends React.Component {
 };
 	
 export default GridContainer;
+
