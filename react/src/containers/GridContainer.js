@@ -33,7 +33,7 @@ class GridContainer extends React.Component {
 		};
 	};
 	
-	handleKeyDown(e) {
+	movePlayer(e) {
 		let arrows = [37, 38, 39, 40];
 		if(arrows.includes(e.keyCode)) {
 			for(let spot in this.state.grid) {
@@ -56,18 +56,19 @@ class GridContainer extends React.Component {
 				grid: newGrid,
 				currentScore: currentScore + 1
 			});
-			//account for reds
-			for(let spot in this.state.grid) {
-				if(spot == '!') {
-					let redSpot = spot;
-				};
-			};
-			if(newSpot == redSpot) {
-				resetGame();
+			handleReds();
+	
+	handleReds() {
+		for(let spot in this.state.grid) {
+			if(spot == '!') {
+				let redSpot = spot;
 			};
 		};
+		if(newSpot == redSpot) {
+			resetGame();
+		};
 	};
-			
+	
 	render() {
 		let grid = this.state.grid.map(gridbox => {
 			return(<h1 className='grid'>{gridbox}</h1>);
@@ -75,7 +76,7 @@ class GridContainer extends React.Component {
 		return(
 			<div>
 				<button onClick={this.resetGame}>Start!</button>
-				<input value='arrow keys to move' onKeyDown={this.handleKeyDown} />
+				<input value='arrow keys to move' onKeyDown={this.movePlayer} />
 				<h4>Moves: {this.state.currentScore}</h4>
 				<div>{grid}</div>
 			</div>
