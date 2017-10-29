@@ -3,19 +3,22 @@ import React from 'react';
 class GridContainer extends React.Component {
 	constructor(props) {
 		super(props);
-		this.initialState = {
+		this.test = 'test'
+		initialState = {
 			grid: Array(36).fill(null),
 			currentScore: 0
 		};
 		this.state = this.initialState;
 		this.resetGame = this.resetGame.bind(this);
-		this.movePlayer = this.handleKeyDown.bind(this);
+		this.movePlayer = this.movePlayer.bind(this);
 	};
 	
 	resetGame() {
 		this.setState(this.initialState);
 		let takenSpots = [0];
-		for(let gamepiece in ['yellow', 'blue', 'red']) {
+		let gamepieces = ['yellow', 'blue', 'red'];
+		for(let gamepiece in gamepieces) {
+			gamepiece = gamepieces[gamepiece];
 			let randSpot = 0;
 			while(takenSpots.includes(randSpot)) {
 				randSpot = Math.floor((Math.random() * 36) + 1);
@@ -73,7 +76,9 @@ class GridContainer extends React.Component {
 	
 	render() {
 		let grid = this.state.grid.map(gridbox => {
-			return(<h1 className='grid'>{gridbox}</h1>);
+			return(
+				<h1 className='grid'>{gridbox}</h1>
+			);
 		});
 		return(
 			<div>
