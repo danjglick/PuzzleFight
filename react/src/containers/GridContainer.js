@@ -9,7 +9,7 @@ class GridContainer extends React.Component {
 		};
 		this.state = this.initialState;
 		this.resetGame = this.resetGame.bind(this);
-		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.movePlayer = this.handleKeyDown.bind(this);
 	};
 	
 	resetGame() {
@@ -57,6 +57,8 @@ class GridContainer extends React.Component {
 				currentScore: currentScore + 1
 			});
 			handleReds();
+		};
+	};
 	
 	handleReds() {
 		for(let spot in this.state.grid) {
