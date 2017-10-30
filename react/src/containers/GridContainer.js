@@ -1,85 +1,96 @@
-import React from 'react';
+import React from 'react'
 
 class GridContainer extends React.Component {
 	constructor(props) {
-		super(props);
-		this.test = 'test'
-		initialState = {
+		super(props)
+		this.initialState = {
 			grid: Array(36).fill(null),
 			currentScore: 0
-		};
-		this.state = this.initialState;
-		this.resetGame = this.resetGame.bind(this);
-		this.movePlayer = this.movePlayer.bind(this);
-	};
+		}
+		this.state = this.initialState
+		this.handleReds()
+		this.resetGame()
+		this.resetGame = this.resetGame.bind(this)
+		this.movePlayer = this.movePlayer.bind(this)
+		this.handleReds = this.handleReds.bind(this)
+	}
 	
 	resetGame() {
-		this.setState(this.initialState);
-		let takenSpots = [0];
-		let gamepieces = ['yellow', 'blue', 'red'];
-		for(let gamepiece in gamepieces) {
-			gamepiece = gamepieces[gamepiece];
-			let randSpot = 0;
-			while(takenSpots.includes(randSpot)) {
-				randSpot = Math.floor((Math.random() * 36) + 1);
-			};
-			takenSpots.push(randSpot);
-			let newGrid = this.state.grid;
-			if(gamepiece == 'yellow') { 
-				newGrid[randSpot] = ':)';
-			} else if(gamepiece == 'blue') {
-				newGrid[randSpot] = '*';
-			}	else if(gamepiece == 'red') {
-				newGrid[randSpot] = '!';
-			};
-			this.setState({grid: newGrid});
-		};
-	};
+		this.setState({
+			grid: Array(36).fill(null),
+			currentScore: 0
+		}, () => {
+			let takenSpots = [0]
+			let gamepieces = ['yellow', 'blue', 'red']
+			for(let gamepiece in gamepieces) {
+				gamepiece = gamepieces[gamepiece]
+				let randSpot = 0
+				while(takenSpots.includes(randSpot)) {
+					randSpot = Math.floor((Math.random() * 35) + 1)
+				}
+				takenSpots.push(randSpot)
+				var newGrid = this.state.grid
+				if(gamepiece == 'yellow') {
+					newGrid[randSpot] = ':)'
+				} else if(gamepiece == 'blue') {
+					newGrid[randSpot] = '*'
+				}	else if(gamepiece == 'red') {
+					newGrid[randSpot] = '!'
+				}
+				this.setState({grid: newGrid})
+				console.log(this.state)
+			}
+		})
+	}
 	
 	movePlayer(e) {
-		let arrows = [37, 38, 39, 40];
+		let arrows = [37, 38, 39, 40]
 		if(arrows.includes(e.keyCode)) {
 			for(let spot in this.state.grid) {
+				spot = this.state.grid[spot]
 				if(spot == ':)') {
-					let oldSpot = parseInt(this.state.grid.indexOf(spot));
-				};
-			};
+					var oldSpot = parseInt(this.state.grid.indexOf(spot))
+				}
+			}
 			if(e.keyCode == 37) {
-				let newSpot = oldSpot - 1;
+				var newSpot = oldSpot - 1
 			} else if(e.keyCode == 38) {
-				let newSpot = oldSpot - 6;
+				var newSpot = oldSpot - 6
 			}	else if(e.keyCode == 39) {
-				let newSpot = oldSpot + 1;
+				var newSpot = oldSpot + 1
 			}	else if(e.keyCode = 40) {
-				let newSpot = oldSpot + 6;
-			};
-			let newGrid = this.state.grid;
-			newGrid[newSpot] = ':)';
+				var newSpot = oldSpot + 6
+			}
+			this.handleReds(newSpot)
+			let newGrid = this.state.grid
+			newGrid[newSpot] = ':)'
+			newGrid[oldSpot] = null
 			this.setState({
 				grid: newGrid,
-				currentScore: currentScore + 1
-			});
-			handleReds();
-		};
-	};
+				currentScore: this.state.currentScore + 1
+			})
+		}
+	}
 	
-	handleReds() {
-		for(let spot in this.state.grid) {
+	handleReds(newSpot) {
+		let grid = this.state.grid
+		for(let spot in grid) {
+			spot = grid[spot]
 			if(spot == '!') {
-				let redSpot = spot;
-			};
-		};
+				var redSpot = grid.indexOf(spot)
+			}
+		}
 		if(newSpot == redSpot) {
-			resetGame();
-		};
-	};
+			this.resetGame()
+		}
+	}
 	
 	render() {
 		let grid = this.state.grid.map(gridbox => {
 			return(
 				<h1 className='grid'>{gridbox}</h1>
-			);
-		});
+			)
+		})
 		return(
 			<div>
 				<button onClick={this.resetGame}>Start!</button>
@@ -87,8 +98,8 @@ class GridContainer extends React.Component {
 				<h4>Moves: {this.state.currentScore}</h4>
 				<div>{grid}</div>
 			</div>
-		);
-	};
-};
+		)
+	}
+}
 	
-export default GridContainer;
+export default GridContainer
