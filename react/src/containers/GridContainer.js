@@ -3,25 +3,24 @@ import React from 'react'
 class GridContainer extends React.Component {
 	constructor(props) {
 		super(props)
-		this.initialState = {
-			isBlank: false,
+		this.state = {
+			wasJustReset: false,
 			grid: Array(36).fill(null),
 			currentScore: 0,
 			bluesLeft: 1,
 			isWinner: 'false'
 		}
-		this.state = this.initialState
 		this.resetGame = this.resetGame.bind(this)
 		this.populateBoard = this.populateBoard.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
 		this.handleBlues = this.handleBlues.bind(this)
 		this.handleReds = this.handleReds.bind(this)
 	}
-	
+	ope
 	resetGame() {
 		// 21-26 should be dryer: setState to intitalState
 		this.setState({
-			isBlank: true,
+			wasJustReset: true,
 			grid: Array(36).fill(null),
 			currentScore: 0,
 			bluesLeft: 1,
@@ -30,15 +29,12 @@ class GridContainer extends React.Component {
 	}
 	
 	componentDidUpdate() {
-		console.log(this.state)
-		if(this.state.isBlank) {
-			this.resetGame()
+		if(this.state.wasJustReset) {
 			this.populateBoard()
 		}
 	}
 	
 	populateBoard() {
-		this.resetGame()
 		let takenSpots = [0]
 		let pieces = ['yellow', 'blue', 'red']
 		for(let piece in pieces) {
@@ -56,7 +52,7 @@ class GridContainer extends React.Component {
 			}	else if(piece == 'red') {
 				newGrid[randSpot] = '!'
 			}
-			this.setState({grid: newGrid, isBlank: false})
+			this.setState({grid: newGrid, wasJustReset: false})
 		}
 	}
 	
@@ -118,6 +114,7 @@ class GridContainer extends React.Component {
 			}
 		}
 		if(newSpot == redSpot) {
+			console.log('handleReds()')
 			this.resetGame()
 		}
 	}
