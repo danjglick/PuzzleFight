@@ -8,8 +8,6 @@ class GridContainer extends React.Component {
 			currentScore: 0
 		}
 		this.state = this.initialState
-		this.handleReds()
-		this.resetGame()
 		this.resetGame = this.resetGame.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
 		this.handleReds = this.handleReds.bind(this)
@@ -38,7 +36,6 @@ class GridContainer extends React.Component {
 					newGrid[randSpot] = '!'
 				}
 				this.setState({grid: newGrid})
-				console.log(this.state)
 			}
 		})
 	}
