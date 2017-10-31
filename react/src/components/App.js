@@ -4,7 +4,7 @@ import GridContainer from '../containers/GridContainer.js';
 const App = () => {
   return(
     <div>
-      <h1>PuzzleFight</h1>
+      <h1 className='logoBar'>PuzzleFight</h1>
       <GridContainer />
     </div>
   );

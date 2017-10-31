@@ -5,40 +5,56 @@ class GridContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(36).fill(null),
+			level: 1,
 			currentScore: 0,
-			bluesLeft: 1,
-			winner: null
+			bluesLeft: null
 		}
 		this.resetGame = this.resetGame.bind(this)
-		// this.initializeState = this.initializeState.bind(this)
-		// this.populateBoard = this.populateBoard.bind(this)
+		this.resetGameSetState = this.resetGameSetState.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
+		this.movePlayerSetState = this.movePlayerSetState.bind(this)
 		this.handleBlues = this.handleBlues.bind(this)
 		this.handleReds = this.handleReds.bind(this)
+		this.handleRedsSetState = this.handleRedsSetState.bind(this)
 	}
 
 	resetGame() {
 		var newGrid = Array(36).fill(null)
 		var takenSpots = [0]
-		var pieces = ['yellow', 'blue', 'red']
-		for(var piece in pieces) {
-			piece = pieces[piece]
-			var randSpot = 0
-			while(takenSpots.includes(randSpot)) {
-				randSpot = Math.floor((Math.random() * 36))
-			}
-			takenSpots.push(randSpot)
-			if(piece == 'yellow') {
-				newGrid[randSpot] = ':)'
-			} else if(piece == 'blue') {
-				newGrid[randSpot] = '*'
-			}	else if(piece == 'red') {
-				newGrid[randSpot] = '!'
-			}
-			console.log(newGrid)
+		var yellowRandSpot = 0
+		while(takenSpots.includes(yellowRandSpot)) {
+			yellowRandSpot = Math.floor((Math.random() * 36))
 		}
-		this.setState({grid: newGrid})
+		newGrid[yellowRandSpot] = ':)'
+		var pieces = ['blue', 'red']
+		for(var i = 1; i <= this.state.level; i++) {
+			for(var piece in pieces) {
+				piece = pieces[piece]
+				var randSpot = 0
+				while(takenSpots.includes(randSpot)) {
+					randSpot = Math.floor((Math.random() * 36))
+				}
+				takenSpots.push(randSpot)
+				if(piece == 'yellow') {
+					newGrid[randSpot] = ':)'
+				} else if(piece == 'blue') {
+					newGrid[randSpot] = '*'
+				}	else if(piece == 'red') {
+					newGrid[randSpot] = '!'
+				}
+			}
+		}
+		var newBluesLeft = this.state.level
+		this.resetGameSetState(newGrid, newBluesLeft)
 	}	
+	
+	resetGameSetState(newGrid, newBluesLeft) {
+		this.setState({
+			grid: newGrid, 
+			currentScore: 0,
+			bluesLeft: newBluesLeft
+		})
+	}
 		
 	movePlayer(e) {
 		var grid = this.state.grid;
@@ -61,16 +77,21 @@ class GridContainer extends React.Component {
 			}
 			if(!(newSpot < 0 || newSpot > 35)) {
 				this.handleBlues(grid, newSpot)
+				this.handleReds(grid, newSpot)
 				var newGrid = grid
 				newGrid[newSpot] = ':)'
 				newGrid[oldSpot] = null
-				var newScore = this.state.currentScore + 1
-				this.setState({
-					grid: newGrid, 
-					currentScore: newScore
-				})
+				var newCurrentScore = this.state.currentScore + 1
+				this.movePlayerSetState(newGrid, newCurrentScore)
 			}	
 		}
+	}
+	
+	movePlayerSetState(newGrid, newCurrentScore) {
+		this.setState({
+			grid: newGrid, 
+			currentScore: newCurrentScore
+		})
 	}
 	
 	handleBlues(grid, newSpot) {
@@ -86,7 +107,11 @@ class GridContainer extends React.Component {
 				{bluesLeft: bluesLeft},
 				function() {
 					if(this.state.bluesLeft == 0) {
-						this.setState({winner: 'winner!'})
+						var newLevel = this.state.level + 1
+						this.setState({
+							level: newLevel
+						})
+						this.resetGame()
 					}
 				}
 			)
@@ -101,9 +126,16 @@ class GridContainer extends React.Component {
 				var redSpot = grid.indexOf(spot)
 			}
 			if(newSpot == redSpot) {
-				this.resetGame()
+					this.resetGame()
+				var newCurrentScore = this.state.currentScore + 3
+				this.handleRedsSetState(newCurrentScore)
 			}
+			
 		}
+	}
+	
+	handleRedsSetState(newCurrentScore) {
+		this.setState({currentScore: newCurrentScore})
 	}
 		
 	render() {
@@ -113,11 +145,13 @@ class GridContainer extends React.Component {
 			)
 		})
 		return(
-			<div>
-				<button onClick={this.resetGame}>Start!</button>
-				<input value='arrow keys to move' onKeyDown={this.movePlayer} />
-				<h4>Current Score: {this.state.currentScore}</h4>
-				<h4>{this.state.winner}</h4>
+			<div className='grid'>
+				<h4 className='statusBar'>
+					<button onClick={this.resetGame}>Start!</button>
+					<input value='arrow keys to move' onKeyDown={this.movePlayer} />
+					CurrentScore:{this.state.currentScore}...
+					Level: {this.state.level}
+				</h4>
 				<div>{grid}</div>
 			</div>
 		)
