@@ -7,60 +7,27 @@ class GridContainer extends React.Component {
 			grid: Array(36).fill(null),
 			currentScore: 0,
 			bluesLeft: 1,
-			populateBoardNow: false,
-			isWinner: 'false'
+			winner: null
 		}
 		this.resetGame = this.resetGame.bind(this)
-		this.initializeState = this.initializeState.bind(this)
-		this.populateBoard = this.populateBoard.bind(this)
+		// this.initializeState = this.initializeState.bind(this)
+		// this.populateBoard = this.populateBoard.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
 		this.handleBlues = this.handleBlues.bind(this)
 		this.handleReds = this.handleReds.bind(this)
 	}
 
 	resetGame() {
-		new Promise((resolve, reject) => {
-			this.initializeState()
-			if(this.state == {
-				populateBoardNow: true,
-				grid: Array(36).fill(null),
-				currentScore: 0,
-				bluesLeft: 1,
-				isWinner: 'false'
-			}) {
-				resolve()
-			} else {
-				reject()
-			}
-		}).then(() => {this.populateBoard()})
-		.catch((err) => {
-			console.log('error')
-			this.setState({grid: Array(36).fill(null)})
-			this.populateBoard()
-		})
-	}
-	
-	initializeState() {
-		this.setState({
-			populateBoardNow: true,
-			grid: Array(36).fill(null),
-			currentScore: 0,
-			bluesLeft: 1,
-			isWinner: 'false'
-		})
-	}
-	
-	populateBoard() {
+		var newGrid = Array(36).fill(null)
 		var takenSpots = [0]
 		var pieces = ['yellow', 'blue', 'red']
 		for(var piece in pieces) {
 			piece = pieces[piece]
 			var randSpot = 0
 			while(takenSpots.includes(randSpot)) {
-				randSpot = Math.floor((Math.random() * 35) + 1)
+				randSpot = Math.floor((Math.random() * 36))
 			}
 			takenSpots.push(randSpot)
-			var newGrid = this.state.grid
 			if(piece == 'yellow') {
 				newGrid[randSpot] = ':)'
 			} else if(piece == 'blue') {
@@ -68,9 +35,10 @@ class GridContainer extends React.Component {
 			}	else if(piece == 'red') {
 				newGrid[randSpot] = '!'
 			}
-			this.setState({grid: newGrid, populateBoardNow: false})
+			console.log(newGrid)
 		}
-	}
+		this.setState({grid: newGrid})
+	}	
 		
 	movePlayer(e) {
 		var grid = this.state.grid;
@@ -118,7 +86,7 @@ class GridContainer extends React.Component {
 				{bluesLeft: bluesLeft},
 				function() {
 					if(this.state.bluesLeft == 0) {
-						this.setState({isWinner: 'true'})
+						this.setState({winner: 'winner!'})
 					}
 				}
 			)
@@ -133,7 +101,7 @@ class GridContainer extends React.Component {
 				var redSpot = grid.indexOf(spot)
 			}
 			if(newSpot == redSpot) {
-				resetGame()
+				this.resetGame()
 			}
 		}
 	}
@@ -149,7 +117,7 @@ class GridContainer extends React.Component {
 				<button onClick={this.resetGame}>Start!</button>
 				<input value='arrow keys to move' onKeyDown={this.movePlayer} />
 				<h4>Current Score: {this.state.currentScore}</h4>
-				<h4>Winner: {this.state.isWinner}</h4>
+				<h4>{this.state.winner}</h4>
 				<div>{grid}</div>
 			</div>
 		)
