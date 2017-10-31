@@ -1,11 +1,36 @@
+* {
+  background-color: black;
+  color: black;
+}
+
+.logoBar {
+  background-color: #B19CD9;
+}
+
+.grid {
+  background-color: green;
+  border: 1px solid white;
+}
+
 .spot {
+  border: 1px solid white;
+  color: white;
   float: left;
   width: 12%;
   height: 0;
   padding-bottom: 12%;
   margin: 1.66%;
-  background-color: #B19CD9;
 }
+
+.statusBar {
+  background-color: #B19CD9;
+  color: black;
+  border: 1px solid white;
+}
+
+
+
+
 
 
 

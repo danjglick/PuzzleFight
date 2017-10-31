@@ -145,14 +145,14 @@ class GridContainer extends React.Component {
 			)
 		})
 		return(
-			<div className='grid'>
+			<div>
 				<h4 className='statusBar'>
-					<button onClick={this.resetGame}>Start!</button>
-					<input value='arrow keys to move' onKeyDown={this.movePlayer} />
-					CurrentScore:{this.state.currentScore}...
-					Level: {this.state.level}
+					<button className='statusBar' onClick={this.resetGame}>Start!</button>
+					<input className='statusBar' value='arrow keys to move' onKeyDown={this.movePlayer} />
+						CurrentScore:{this.state.currentScore}...
+						Level: {this.state.level}
 				</h4>
-				<div>{grid}</div>
+				<div className='grid'>{grid}</div>
 			</div>
 		)
 	}
