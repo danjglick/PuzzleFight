@@ -1,4 +1,5 @@
 import React from 'react'
+import StatusBarContainer from './StatusBarContainer'
 
 class GridContainer extends React.Component {
 	constructor(props) {
@@ -145,14 +146,14 @@ class GridContainer extends React.Component {
 			)
 		})
 		return(
-			<div className='grid'>
-				<h4 className='statusBar'>
-					<button onClick={this.resetGame}>Start!</button>
-					<input value='arrow keys to move' onKeyDown={this.movePlayer} />
-					CurrentScore:{this.state.currentScore}...
-					Level: {this.state.level}
-				</h4>
-				<div>{grid}</div>
+			<div>
+				<StatusBarContainer
+					resetGame={this.resetGame} 
+					movePlayer={this.movePlayer}
+					level={this.state.level}
+					currentScore={this.state.currentScore}
+				/>
+				<div className='grid'>{grid}</div>
 			</div>
 		)
 	}

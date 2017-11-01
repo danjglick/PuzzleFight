@@ -5,7 +5,7 @@ const App = () => {
   return(
     <div>
       <h1 className='logoBar'>PuzzleFight</h1>
-      <GridContainer />
+      <GridContainer/>
     </div>
   );
 };
