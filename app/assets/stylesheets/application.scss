@@ -1,15 +1,23 @@
 * {
-  background-color: black;
-  color: black;
+  background-color: #292929;
+  color: white;
 }
 
 .logoBar {
-  background-color: #B19CD9;
+  background-color: #3F3F3F;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
 }
 
 .introBox a {
-  color: white;
 }
+
+.introBox {
+  text-align: center;
+} 
 
 .grid {
   background-color: green;
@@ -17,7 +25,6 @@
 
 .spot {
   border: 1px solid white;
-  color: white;
   float: left;
   width: 12%;
   height: 0;
@@ -26,8 +33,8 @@
 }
 
 .statusBar {
-  background-color: #B19CD9;
-  color: black;
+  background-color: #3F3F3F;
+  text-align: center;
 }
 
 

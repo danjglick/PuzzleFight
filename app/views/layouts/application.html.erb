@@ -7,7 +7,8 @@
     <%= javascript_include_tag 'application' %>
   </head>
   <body>
-    <%= yield %>
+    <h1 class='logoBar'>PuzzleFight</h1>
+    <div class='description'>This is a description of the app.</div>
     <div class='introBox'>
       <% if user_signed_in? %>
         <ul class="top-ul"><%= link_to 'Update Account', edit_user_registration_path, method: :get %></ul>
@@ -20,5 +21,6 @@
         <ul class="top-ul"><%= link_to 'Sign Up', new_user_registration_path %></ul>
       <% end %>
     </div>  
+    <%= yield %>
   </body>
 </html>
