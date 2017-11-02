@@ -1,11 +1,11 @@
 import React from 'react';
-import GridContainer from '../containers/GridContainer.js';
+import GameContainer from '../containers/GameContainer.js';
 
 const App = () => {
   return(
     <div>
       <h1 className='logoBar'>PuzzleFight</h1>
-      <GridContainer/>
+      <GameContainer/>
     </div>
   );
 };

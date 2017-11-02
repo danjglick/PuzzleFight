@@ -1,7 +1,7 @@
 import React from 'react'
 import StatusBarContainer from './StatusBarContainer'
 
-class GridContainer extends React.Component {
+class GameContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -11,12 +11,9 @@ class GridContainer extends React.Component {
 			bluesLeft: null
 		}
 		this.resetGame = this.resetGame.bind(this)
-		this.resetGameSetState = this.resetGameSetState.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
-		this.movePlayerSetState = this.movePlayerSetState.bind(this)
 		this.handleBlues = this.handleBlues.bind(this)
 		this.handleReds = this.handleReds.bind(this)
-		this.handleRedsSetState = this.handleRedsSetState.bind(this)
 	}
 
 	resetGame() {
@@ -46,16 +43,11 @@ class GridContainer extends React.Component {
 			}
 		}
 		var newBluesLeft = this.state.level
-		this.resetGameSetState(newGrid, newBluesLeft)
-	}	
-	
-	resetGameSetState(newGrid, newBluesLeft) {
 		this.setState({
 			grid: newGrid, 
-			currentScore: 0,
-			bluesLeft: newBluesLeft
-		})
-	}
+			currentScore: 0, 
+			bluesLeft: newBluesLeft})
+	}	
 		
 	movePlayer(e) {
 		var grid = this.state.grid;
@@ -83,16 +75,12 @@ class GridContainer extends React.Component {
 				newGrid[newSpot] = ':)'
 				newGrid[oldSpot] = null
 				var newCurrentScore = this.state.currentScore + 1
-				this.movePlayerSetState(newGrid, newCurrentScore)
+				this.setState({
+					grid: newGrid, 
+					currentScore: newCurrentScore
+				})
 			}	
 		}
-	}
-	
-	movePlayerSetState(newGrid, newCurrentScore) {
-		this.setState({
-			grid: newGrid, 
-			currentScore: newCurrentScore
-		})
 	}
 	
 	handleBlues(grid, newSpot) {
@@ -103,15 +91,12 @@ class GridContainer extends React.Component {
 			}
 		}
 		if(newSpot == blueSpot) {
-			var bluesLeft = this.state.bluesLeft - 1
-			this.setState(
-				{bluesLeft: bluesLeft},
+			var newBluesLeft = this.state.bluesLeft - 1
+			this.setState({bluesLeft: newBluesLeft},
 				function() {
 					if(this.state.bluesLeft == 0) {
 						var newLevel = this.state.level + 1
-						this.setState({
-							level: newLevel
-						})
+						this.setState({level: newLevel}) 
 						this.resetGame()
 					}
 				}
@@ -122,21 +107,14 @@ class GridContainer extends React.Component {
 	handleReds(grid, newSpot) {
 		for(var spot in grid) {
 			spot = grid[spot]
-			var redSpot = 100
+			var redSpot
 			if(spot == '!') {
 				var redSpot = grid.indexOf(spot)
 			}
 			if(newSpot == redSpot) {
-					this.resetGame()
-				var newCurrentScore = this.state.currentScore + 3
-				this.handleRedsSetState(newCurrentScore)
-			}
-			
+				this.resetGame()
+			}	
 		}
-	}
-	
-	handleRedsSetState(newCurrentScore) {
-		this.setState({currentScore: newCurrentScore})
 	}
 		
 	render() {
@@ -159,4 +137,4 @@ class GridContainer extends React.Component {
 	}
 }
 	
-export default GridContainer
+export default GameContainer
