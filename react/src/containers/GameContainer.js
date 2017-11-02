@@ -46,7 +46,8 @@ class GameContainer extends React.Component {
 		this.setState({
 			grid: newGrid, 
 			currentScore: 0, 
-			bluesLeft: newBluesLeft})
+			bluesLeft: newBluesLeft
+		})
 	}	
 		
 	movePlayer(e) {
