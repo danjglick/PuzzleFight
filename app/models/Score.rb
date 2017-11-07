@@ -4,6 +4,7 @@ class Score < ApplicationRecord
   
   validates :user_id, presence: true
   validates :level_id, presence: true
-  validates :is_alltime_best?, presence: true
-  validates :is_personal_best?, presence: true
+  validates :score, presence: true
+  
+  self.primary_key = :id
 end

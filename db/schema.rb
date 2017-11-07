@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106171137) do
+ActiveRecord::Schema.define(version: 20171107011256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,19 +19,20 @@ ActiveRecord::Schema.define(version: 20171106171137) do
     t.integer  "num_blues_reds", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "all_time_best"
   end
 
   create_table "scores", force: :cascade do |t|
-    t.integer  "level_id",          null: false
-    t.integer  "num_moves",         null: false
-    t.boolean  "is_alltime_best?",  null: false
-    t.boolean  "is_personal_best?", null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "level_id",   null: false
+    t.integer  "score",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id",    null: false
     t.index ["level_id"], name: "index_scores_on_level_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
+    t.string   "username",                            null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -44,7 +45,6 @@ ActiveRecord::Schema.define(version: 20171106171137) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "username",                            null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

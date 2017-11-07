@@ -10,7 +10,7 @@ const StatusBarContainer = (props) => {
       Start!
       </button>
       ...Level:{props.level}
-      ...AllTimeBest{props.allTimeBest}
+      ...AllTimeBest:{props.allTimeBest}
       ...PersonalBest:{props.personalBest}
       ...CurrentScore:{props.currentScore}
     </h4>

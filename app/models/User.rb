@@ -4,9 +4,9 @@ class User < ApplicationRecord
   
   validates :username, presence: true
   validates :email, presence: true
-  validates :password, presence: true
+  validates :encrypted_password, presence: true
   
-  self.primary_key = 'id'
+  self.primary_key = :id
   
   devise(
     :database_authenticatable, 

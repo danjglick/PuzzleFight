@@ -103,14 +103,23 @@ class GameContainer extends React.Component {
 		}
 		if(newSpot == blueSpot) {
 			var newBluesLeft = this.state.bluesLeft - 1
-			this.setState({bluesLeft: newBluesLeft},
-				function() {
-					if(this.state.bluesLeft == 0) {
-						var newLevel = this.state.level + 1
-						this.setState({level: newLevel}) 
-					}
-				}
-			)
+			this.setState({bluesLeft: newBluesLeft})
+		}
+		if(newBluesLeft == 0) { 
+			let payload = JSON.stringify({
+				currentScore: this.state.currentScore,
+				level: this.state.level
+			});
+			console.log(payload)
+      fetch(`/api/v1/scores`, {
+        credentials: 'same-origin',
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: payload
+      })
+        .then((response) => response.json())
+				.then((body) => console.log(body))
+				.catch(function(error){console.log(error)})
 		}
 	}	
 	
