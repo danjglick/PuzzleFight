@@ -66,6 +66,7 @@ class GameContainer extends React.Component {
 			yellowRandSpot = Math.floor((Math.random() * 64))
 		}
 		newGrid[yellowRandSpot] = 'yellow'
+		takenSpots.push(yellowRandSpot)
 		var pieces = ['blue', 'red']
 		for(var i = 1; i <= this.state.level; i++) {
 			for(var piece in pieces) {
