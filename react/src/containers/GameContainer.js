@@ -6,17 +6,18 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 15,
+			level: 20,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
 			bluesLeft: 0,
 			playMode: false,
-			usernameAllTimeBest: 'n/a'
+			usernameAllTimeBest: 'username',
+			dateAllTimeBest: 'date'
 		}
+		this.resetGame = this.resetGame.bind(this)
 		this.getAllTimeBest = this.getAllTimeBest.bind(this)
 		this.getPersonalBest = this.getPersonalBest.bind(this)
-		this.resetGame = this.resetGame.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
 		this.handleBlues = this.handleBlues.bind(this)
 		this.handleReds = this.handleReds.bind(this)
@@ -26,69 +27,6 @@ class GameContainer extends React.Component {
 		document.addEventListener('keydown', this.movePlayer)
 	}
 	
-	getAllTimeBest() {
-		fetch('http://localhost:3000/api/v1/scores', {
-			credentials: 'same-origin',
-      method: 'GET',
-      headers: {'Content-Type': 'application/json'}
-    })
-		  .then(response => {
-		    if(response.ok) {
-					return response
-				} else {
-		      let errorMessage = `${response.status} (${response.statusText})`
-		      let error = new Error(errorMessage)
-		      throw(error)
-		    }
-		  })
-		  .then(response => response.json())
-		  .then(body => {
-				var newAllTimeBest = 0
-				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
-					var userScore = body.all_scores[i]
-					if((userScore.level_id == this.state.level) 
-					&& (userScore.score < newAllTimeBest || newAllTimeBest == 0)) {
-						newAllTimeBest = userScore.score
-						var newUsernameAllTimeBest = userScore.username
-						this.setState({
-							allTimeBest: newAllTimeBest, 
-							usernameAllTimeBest: newUsernameAllTimeBest
-						}) 
-					}
-				}
-			})
-		  .catch(error => console.error(`Error in fetch: ${error.message}`))
-	}
-	
-	getPersonalBest() {
-		fetch('http://localhost:3000/api/v1/scores',{
-			credentials: 'same-origin',
-      method: 'GET',
-      headers: {'Content-Type': 'application/json'}
-    })
-		  .then(response => {
-		    if(response.ok) {
-					return response
-				} else {
-		      let errorMessage = `${response.status} (${response.statusText})`
-		      let error = new Error(errorMessage)
-		      throw(error)
-		    }
-		  })
-		  .then(response => response.json())
-		  .then(body => {
-				var newPersonalBest = 0
-				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
-					var userScore = body.all_scores[i]
-					if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
-						newPersonalBest = userScore.score
-					}
-				}
-				this.setState({personalBest: newPersonalBest})
-			})
-		  .catch(error => console.error(`Error in fetch: ${error.message}`))		
-	}
-
 	resetGame() {
 		this.getAllTimeBest()
 		this.getPersonalBest()
@@ -126,6 +64,71 @@ class GameContainer extends React.Component {
 			bluesLeft: newBluesLeft
 		})
 	}	
+	
+	getAllTimeBest() {
+		fetch('http://localhost:3000/api/v1/scores', {
+			credentials: 'same-origin',
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'}
+    })
+		  .then(response => {
+		    if(response.ok) {
+					return response
+				} else {
+		      let errorMessage = `${response.status} (${response.statusText})`
+		      let error = new Error(errorMessage)
+		      throw(error)
+		    }
+		  })
+		  .then(response => response.json())
+		  .then(body => {
+				var newAllTimeBest = 0
+				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
+					var userScore = body.all_scores[i]
+					if((userScore.level_id == this.state.level) 
+					&& (userScore.score < newAllTimeBest || newAllTimeBest == 0)) {
+						newAllTimeBest = userScore.score
+						var newUsernameAllTimeBest = userScore.username
+						var newDateAllTimeBest = userScore.created_at.slice(0, 4)
+						this.setState({
+							allTimeBest: newAllTimeBest, 
+							usernameAllTimeBest: newUsernameAllTimeBest,
+							dateAllTimeBest: newDateAllTimeBest
+						}) 
+					}
+				}
+			})
+		  .catch(error => console.error(`Error in fetch: ${error.message}`))
+	}
+	
+	getPersonalBest() {
+		fetch('http://localhost:3000/api/v1/scores',{
+			credentials: 'same-origin',
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'}
+    })
+		  .then(response => {
+		    if(response.ok) {
+					return response
+				} else {
+		      let errorMessage = `${response.status} (${response.statusText})`
+		      let error = new Error(errorMessage)
+		      throw(error)
+		    }
+		  })
+		  .then(response => response.json())
+		  .then(body => {
+				var newPersonalBest = 0
+				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
+					var userScore = body.all_scores[i]
+					if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
+						newPersonalBest = userScore.score
+					}
+				}
+				this.setState({personalBest: newPersonalBest})
+			})
+		  .catch(error => console.error(`Error in fetch: ${error.message}`))		
+	}
 	
 	movePlayer(e) {
 		if(this.state.playMode == true) {
@@ -207,15 +210,16 @@ class GameContainer extends React.Component {
 	}	
 	
 	handleReds(grid, newSpot) {
-		for(var spot in grid) {
-			spot = grid[spot]
-			var redSpot
+		var redSpots = []
+		for(var i in grid) {
+			var spot = grid[i]
 			if(spot == 'red') {
-				var redSpot = grid.indexOf(spot)
+				redSpots.push(parseInt(i))
 			}
 		}
-		if(newSpot == redSpot) {
-			var newCurrentScore = this.state.currentScore + 9
+		if(redSpots.includes(newSpot)) {
+			var randNum = Math.floor((Math.random() * 10))
+			var newCurrentScore = this.state.currentScore + randNum
 			this.setState({currentScore: newCurrentScore})
 		}
 	}
@@ -245,6 +249,7 @@ class GameContainer extends React.Component {
 					personalBest={this.state.personalBest}
 					currentScore={this.state.currentScore}
 					usernameAllTimeBest={this.state.usernameAllTimeBest}
+					dateAllTimeBest={this.state.dateAllTimeBest}
 				/>
 				<div>{grid}</div>
 			</div>
