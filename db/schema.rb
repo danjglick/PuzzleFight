@@ -10,16 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108202212) do
+ActiveRecord::Schema.define(version: 20171108175651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "gamestates", force: :cascade do |t|
-    t.json     "gamestate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "levels", force: :cascade do |t|
     t.integer  "num_blues_reds", null: false

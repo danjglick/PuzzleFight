@@ -28,8 +28,6 @@ class GameContainer extends React.Component {
 	}
 	
 	resetGame() {
-		//GET this.state from db (POSTED at beginning of movePlayer). setState to response body
-		//may have to delete the following 2 function calls
 		this.getAllTimeBest()
 		this.getPersonalBest()
 		this.setState({playMode: true})
@@ -133,22 +131,6 @@ class GameContainer extends React.Component {
 	}
 	
 	movePlayer(e) {
-		fetch('http://localhost:3000/api/v1/gamestates', {
-			credentials: 'same-origin',
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({gamestate: this.state})
-		})
-			.then(response => {
-				if (response.ok) {return response} 
-				else {
-					let errorMessage = `${response.status} (${response.statusText})`
-					let error = new Error(errorMessage);
-					throw(error)
-				}
-			})
-			.then(response => {response.json()})
-			.catch(error => console.error(`Error in fetch: ${error.message}`))
 		if(this.state.playMode == true) {
 			var grid = this.state.grid;
 			var arrows = [37, 38, 39, 40]
