@@ -9,7 +9,7 @@
   text-transform: uppercase;
   font-family: 'FranchiseRegular','HelveticaNeue-Bold','League Gothic','Impact',sans-serif;
   font-size: 100px;
-  margin-bottom: -5px;
+  margin-bottom: 0px;
   margin-left: 10px;
   color: #B19CD9;
   text-shadow: #573B8C -4px 4px 0;
@@ -19,20 +19,31 @@
 
 .introBox {
   text-align: center;
-  margin-bottom: 10px;
 }
 
 .description {
-  margin: 10px;
+  margin: 20px;
+}
+
+.hi-user {
+  margin: 0;
+  padding: 0px;
 }
 
 .top-ul {
   margin: 0;
+  padding: 0px;
 }
 
 .sign-up-in-out {
   margin: 0px auto;
   width: 30%;
+  padding: 0px;
+}
+
+.statusBar {
+  margin-top: 20px;
+  margin-bottom: 1px;
 }
 
 .spot {
@@ -74,11 +85,15 @@
   margin: 0%;
 }
 
-.statusBar {
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 0px;
+.field {
+  color: #B19CD9; 
+  text-align: left;
 }
+
+.backLink {
+  text-align: center;
+}
+
 
 
 

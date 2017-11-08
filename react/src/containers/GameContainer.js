@@ -1,18 +1,20 @@
 import React from 'react'
-import StatusBarContainer from './StatusBarContainer'
+import StatusBar from '../Components/StatusBar'
 
 class GameContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 1,
+			level: 3,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
-			bluesLeft: null,
-			playMode: false
+			bluesLeft: 0,
+			playMode: false,
+			current_user: {}
 		}
+		this.getPersonalBest = this.getPersonalBest.bind(this)
 		this.resetGame = this.resetGame.bind(this)
 		this.movePlayer = this.movePlayer.bind(this)
 		this.handleBlues = this.handleBlues.bind(this)
@@ -22,8 +24,40 @@ class GameContainer extends React.Component {
 	componentWillMount() {
 		document.addEventListener('keydown', this.movePlayer)
 	}
+	
+	getPersonalBest() {
+		fetch('http://localhost:3000/api/v1/scores',{
+			credentials: 'same-origin',
+      method: 'GET',
+      headers: { 'Content-Type':'application/json'}
+    })
+		  .then(response => {
+		    if(response.ok) {
+					return response
+				} else {
+		      let errorMessage = `${response.status} (${response.statusText})`
+		      let error = new Error(errorMessage)
+		      throw(error)
+		    }
+		  })
+		  .then(response => response.json())
+		  .then(body => {
+				var userScore = 0
+				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
+					userScore = body.all_scores[i]
+					if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
+						var newPersonalBest = userScore.score
+					} else {
+						var newPersonalBest = 0
+					}
+				}
+				this.setState({personalBest: newPersonalBest})
+			})
+		  .catch(error => console.error(`Error in fetch: ${error.message}`))		
+	}
 
 	resetGame() {
+		this.getPersonalBest()
 		this.setState({playMode: true})
 		var newGrid = Array(64).fill(null)
 		var takenSpots = [0]
@@ -103,15 +137,34 @@ class GameContainer extends React.Component {
 		}
 		if(newSpot == blueSpot) {
 			var newBluesLeft = this.state.bluesLeft - 1
-			this.setState({bluesLeft: newBluesLeft},
-				function() {
-					if(this.state.bluesLeft == 0) {
-						var newLevel = this.state.level + 1
-						this.setState({level: newLevel}) 
-					}
-				}
-			)
+			this.setState({bluesLeft: newBluesLeft})
 		}
+		if(newBluesLeft == 0) {
+			console.log(1)
+			let payload = JSON.stringify({
+				currentScore: this.state.currentScore,
+				level: this.state.level
+			})
+			fetch('http://localhost:3000/api/v1/scores', {
+				credentials: 'same-origin',
+	      method: 'POST',
+	      headers: { 'Content-Type':'application/json'},
+				body: JSON.stringify({level: this.state.level, score: this.state.currentScore})
+	    })
+			  .then(response => {
+			    if (response.ok) {return response} 
+					else {
+			      let errorMessage = `${response.status} (${response.statusText})`
+			      let error = new Error(errorMessage);
+			      throw(error)
+			    }
+			  })
+			  .then(response => response.json())
+			  .then(body => {
+					console.log(body)
+				})
+			  .catch(error => console.error(`Error in fetch: ${error.message}`))
+		}	
 	}	
 	
 	handleReds(grid, newSpot) {
@@ -145,13 +198,14 @@ class GameContainer extends React.Component {
 		})
 		return(
 			<div>
-				<StatusBarContainer
+				<StatusBar
 					resetGame={this.resetGame} 
 					movePlayer={this.movePlayer}
 					level={this.state.level}
 					allTimeBest={this.state.allTimeBest}
 					personalBest={this.state.personalBest}
-					currentScore={this.state.currentScore}
+					currentScore={this.state.currentScore}	
+					bluesLeft={this.state.bluesLeft}
 				/>
 				<div>{grid}</div>
 			</div>
