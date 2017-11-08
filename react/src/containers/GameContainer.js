@@ -6,7 +6,7 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 3,
+			level: 10,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
@@ -129,18 +129,18 @@ class GameContainer extends React.Component {
 	}
 	
 	handleBlues(grid, newSpot) {
-		for(var spot in grid) {
-			spot = grid[spot]
+		var blueSpots = []
+		for(var i in grid) {
+			var spot = grid[i]
 			if(spot == 'blue') {
-				var blueSpot = grid.indexOf(spot)
+				blueSpots.push(parseInt(i))
 			}
 		}
-		if(newSpot == blueSpot) {
+		if(blueSpots.includes(newSpot)) {
 			var newBluesLeft = this.state.bluesLeft - 1
 			this.setState({bluesLeft: newBluesLeft})
 		}
 		if(newBluesLeft == 0) {
-			console.log(1)
 			let payload = JSON.stringify({
 				currentScore: this.state.currentScore,
 				level: this.state.level
@@ -161,7 +161,7 @@ class GameContainer extends React.Component {
 			  })
 			  .then(response => response.json())
 			  .then(body => {
-					console.log(body)
+					//code here
 				})
 			  .catch(error => console.error(`Error in fetch: ${error.message}`))
 		}	
@@ -205,7 +205,6 @@ class GameContainer extends React.Component {
 					allTimeBest={this.state.allTimeBest}
 					personalBest={this.state.personalBest}
 					currentScore={this.state.currentScore}	
-					bluesLeft={this.state.bluesLeft}
 				/>
 				<div>{grid}</div>
 			</div>
