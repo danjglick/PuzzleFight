@@ -1,0 +1,43 @@
+
+let grid = {
+  1: {gamepiece: null, possibleDestinations: [2, 5]},
+  2: {gamepiece: 'blue', possibleDestinations: [1, 3, 6]},
+  3: {gamepiece: null, possibleDestinations: [2, 4, 7]},
+  4: {gamepiece: null, possibleDestinations: [3, 8]},
+  5: {gamepiece: 'yellow', possibleDestinations: [1, 6, 9]},
+  6: {gamepiece: null, possibleDestinations: [2, 5, 7, 10]},
+  7: {gamepiece: 'blue', possibleDestinations: [3, 6, 8, 11]},
+  8: {gamepiece: 'red', possibleDestinations: [4, 7, 12]},
+  9: {gamepiece: null, possibleDestinations: [5, 10, 13]},
+  10: {gamepiece: null, possibleDestinations: [6, 9, 11, 14]},
+  11: {gampiece: null, possibleDestinations: [7, 10, 12, 15]},
+  12: {gamepiece: null, possibleDestinations: [8, 11, 16]},
+  13: {gamepiece: 'red', possibleDestinations: [9, 14]},
+  14: {gamepiece: null, possibleDestinations: [10, 13, 15]},
+  15: {gamepiece: null, possibleDestinations: [11, 14, 16]},
+  16: {gamepiece: null, possibleDestinations: [12, 15]}
+};
+
+let routesTaken = {};
+
+let permsCount = 1;
+for(let key in grid) {
+  let possibleMovesPerSpot = key.possibleDestinations.length();
+  permsMax *= possibleMovesPerSpot;
+};
+
+let currentSpot;
+for(key in grid) {
+  if(key.gamePiece == 'blue') {
+    currentSpot = key;
+  };
+};
+
+let permsCount = 0;
+while(permsCount < permsMax) {
+  let currentPossibleDestinations = grid.currentSpot.possibleDestinations;
+  randNum = Math.random(currentPossibleDestinations.length());
+  newSpot = currentPossibleDestinations[randNum]
+  currentSpot = newSpot;
+  routesTaken.push()
+};
