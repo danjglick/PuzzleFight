@@ -13,7 +13,6 @@ const StatusBar = (props) => {
       ...AllTimeBest:{props.allTimeBest}
       ...PersonalBest:{props.personalBest}
       ...CurrentScore:{props.currentScore}
-      ...BluesLeft:{props.bluesLeft}
     </h4>
   )
 }
