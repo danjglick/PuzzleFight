@@ -6,13 +6,13 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 5,
+			level: 15,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
 			bluesLeft: 0,
 			playMode: false,
-			current_user: {}
+			usernameAllTimeBest: 'n/a'
 		}
 		this.getAllTimeBest = this.getAllTimeBest.bind(this)
 		this.getPersonalBest = this.getPersonalBest.bind(this)
@@ -30,7 +30,7 @@ class GameContainer extends React.Component {
 		fetch('http://localhost:3000/api/v1/scores', {
 			credentials: 'same-origin',
       method: 'GET',
-      headers: {'Content-Type':'application/json'}
+      headers: {'Content-Type': 'application/json'}
     })
 		  .then(response => {
 		    if(response.ok) {
@@ -46,11 +46,15 @@ class GameContainer extends React.Component {
 				var newAllTimeBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 					var userScore = body.all_scores[i]
-					if((userScore.level_id == this.state.level && userScore.score < newAllTimeBest) 
-					|| newAllTimeBest == 0) {
+					if((userScore.level_id == this.state.level) 
+					&& (userScore.score < newAllTimeBest || newAllTimeBest == 0)) {
 						newAllTimeBest = userScore.score
-						this.setState({allTimeBest: newAllTimeBest})
-					} 
+						var newUsernameAllTimeBest = userScore.username
+						this.setState({
+							allTimeBest: newAllTimeBest, 
+							usernameAllTimeBest: newUsernameAllTimeBest
+						}) 
+					}
 				}
 			})
 		  .catch(error => console.error(`Error in fetch: ${error.message}`))
@@ -60,7 +64,7 @@ class GameContainer extends React.Component {
 		fetch('http://localhost:3000/api/v1/scores',{
 			credentials: 'same-origin',
       method: 'GET',
-      headers: { 'Content-Type':'application/json'}
+      headers: {'Content-Type': 'application/json'}
     })
 		  .then(response => {
 		    if(response.ok) {
@@ -179,8 +183,11 @@ class GameContainer extends React.Component {
 			fetch('http://localhost:3000/api/v1/scores', {
 				credentials: 'same-origin',
 	      method: 'POST',
-	      headers: { 'Content-Type':'application/json'},
-				body: JSON.stringify({level: this.state.level, score: this.state.currentScore})
+	      headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					level: this.state.level, 
+					score: this.state.currentScore
+				})
 	    })
 			  .then(response => {
 			    if (response.ok) {return response} 
@@ -236,7 +243,8 @@ class GameContainer extends React.Component {
 					level={this.state.level}
 					allTimeBest={this.state.allTimeBest}
 					personalBest={this.state.personalBest}
-					currentScore={this.state.currentScore}	
+					currentScore={this.state.currentScore}
+					usernameAllTimeBest={this.state.usernameAllTimeBest}
 				/>
 				<div>{grid}</div>
 			</div>

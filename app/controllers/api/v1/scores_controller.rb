@@ -17,8 +17,9 @@ class Api::V1::ScoresController < ApplicationController
     if current_personal_best.empty?
       score = Score.create!(
         level_id: params[:level], 
-        user_id: current_user.id, 
-        score: params[:score] + 1,
+        user_id: current_user.id,
+        username: current_user.username,
+        score: params[:score] + 1
       )
     else
       if params[:score] < current_personal_best[0].score
@@ -28,7 +29,8 @@ class Api::V1::ScoresController < ApplicationController
         ).destroy_all
         score = Score.create!(
           level_id: params[:level], 
-          user_id: current_user.id, 
+          user_id: current_user.id,
+          username: current_user.username, 
           score: params[:score] + 1
         )
       end

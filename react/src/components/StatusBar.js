@@ -10,7 +10,7 @@ const StatusBar = (props) => {
       >Start!
       </button>
       ...Level:{props.level}
-      ...AllTimeBest:{props.allTimeBest}
+      ...AllTimeBest:{props.allTimeBest}({props.usernameAllTimeBest})
       ...PersonalBest:{props.personalBest}
       ...CurrentScore:{props.currentScore}
     </h4>
