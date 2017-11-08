@@ -5,7 +5,7 @@ class Api::V1::GamestatesController < ApplicationController
   
   def create
     Gamestate.destroy_all
-    Gamestate.create!(gamestate: params[:gamestate])
-    render json: params[:gamestate]
+    Gamestate.create!(current_state: params[:currentState])
+    render json: Gamestate.all
   end
 end
