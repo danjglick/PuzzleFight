@@ -6,7 +6,7 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 10,
+			level: 6,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
@@ -42,9 +42,8 @@ class GameContainer extends React.Component {
 		  })
 		  .then(response => response.json())
 		  .then(body => {
-				var userScore = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
-					userScore = body.all_scores[i]
+					var userScore = body.all_scores[i]
 					if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
 						var newPersonalBest = userScore.score
 					} else {
@@ -161,11 +160,8 @@ class GameContainer extends React.Component {
 			    }
 			  })
 			  .then(response => response.json())
-			  .then(body => {
-					//code here
-				})
 			  .catch(error => console.error(`Error in fetch: ${error.message}`))
-		}	
+		}
 	}	
 	
 	handleReds(grid, newSpot) {
