@@ -1,20 +1,21 @@
 import React from 'react'
 
-const StatusBarContainer = (props) => {
+const StatusBar = (props) => {
   return(
     <h4 className='statusBar'>
       <button 
-        className='statusBar' 
+        className='statusBar'
+        id='column1' 
         onClick={props.resetGame}
-      >
-      Start!
+      >Start!
       </button>
       ...Level:{props.level}
       ...AllTimeBest:{props.allTimeBest}
       ...PersonalBest:{props.personalBest}
       ...CurrentScore:{props.currentScore}
+      ...BluesLeft:{props.bluesLeft}
     </h4>
   )
 }
 
-export default StatusBarContainer
+export default StatusBar

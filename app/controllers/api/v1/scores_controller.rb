@@ -1,37 +1,37 @@
 class Api::V1::ScoresController < ApplicationController
-  def index 
-    render json: Score.all
-  end
-  
-  def new
-    @score = Scores.find()
+  # skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!
+  def index
+    render json: {
+      all_scores: Score.all,
+      current_user: current_user
+    }
   end
   
   def create
-    binding.pry
-    currentPersonalBest = Score.where(
+    current_personal_best = Score.where(
       level_id: params[:level], 
       user_id: current_user.id
     )
-    if currentPersonalBest.empty?
-      @score = Score.create!(
+    if current_personal_best.empty?
+      score = Score.create!(
         level_id: params[:level], 
         user_id: current_user.id, 
-        score: params[:currentScore],
+        score: params[:score] + 1,
       )
-      @score.save!
     else
-      if params[:currentScore] < currentPersonalBest.score
+      if params[:score] < current_personal_best[0].score
         Score.where(
           level_id: params[:level],
           user_id: current_user.id
         ).destroy_all
-        @score = Score.create!(
+        score = Score.create!(
           level_id: params[:level], 
           user_id: current_user.id, 
-          score: params[:currentScore]
+          score: params[:score] + 1
         )
       end
     end
+    render json: {level: params[:level], score: params[:score]}
   end
 end

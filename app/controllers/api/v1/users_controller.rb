@@ -3,3 +3,4 @@ class Api::V1::UsersController < ApplicationController
     render json: User.all
   end
 end
+
