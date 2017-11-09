@@ -7,7 +7,10 @@ Rails.application.routes.draw do
       resources :users, only: [:index]
       resources :levels, only: [:index]
       resources :scores, only: [:index, :create]
+<<<<<<< HEAD
       resources :gamestates, only: [:index, :create]
+=======
+>>>>>>> master
     end
   end
 end

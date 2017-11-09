@@ -1,2 +1,0 @@
-class Gamestate < ApplicationRecord
-end
