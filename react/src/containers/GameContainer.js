@@ -6,14 +6,15 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 10,
+			level: 15,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
 			bluesLeft: 0,
 			playMode: false,
 			usernameAllTimeBest: 'username',
-			dateAllTimeBest: 'date'
+			dateAllTimeBest: 'date',
+			resetToSavedState: false
 		}
 		this.resetGame = this.resetGame.bind(this)
 		this.getAllTimeBest = this.getAllTimeBest.bind(this)
@@ -42,53 +43,58 @@ class GameContainer extends React.Component {
 					throw(error)
 				}
 			})
-			.then(response => response.json())
-			// .then(body => {
-			// 	if(!this.state.grid.includes('yellow') &&
-			// 		!this.state.grid.includes('blue') &&
-			// 		!this.state.grid.includes('red')
-			// 	) {
-			// 		var savedState = body[0].current_state
-			// 		this.setState(savedState)
-			// 	}
-			// })
-			.catch(error => console.error(`Error in fetch: ${error.message}`))
-		//what do to with rest of resetGame()...?
-		this.getAllTimeBest()
-		this.getPersonalBest()
-		this.setState({playMode: true})
-		var newGrid = Array(64).fill(null)
-		var takenSpots = [0]
-		var yellowRandSpot = 0
-		while(takenSpots.includes(yellowRandSpot)) {
-			yellowRandSpot = Math.floor((Math.random() * 64))
-		}
-		newGrid[yellowRandSpot] = 'yellow'
-		takenSpots.push(yellowRandSpot)
-		var pieces = ['blue', 'red']
-		for(var i = 1; i <= this.state.level; i++) {
-			for(var piece in pieces) {
-				piece = pieces[piece]
-				var randSpot = 0
-				while(takenSpots.includes(randSpot)) {
-					randSpot = Math.floor((Math.random() * 64))
+			.then(response => {
+				response.json()
+			})
+			.then(body => {
+				debugger
+				if(!this.state.grid.includes('yellow') &&
+					!this.state.grid.includes('blue') &&
+					!this.state.grid.includes('red')
+				) {
+					var savedState = body[0].current_state
+					this.setState(savedState)
+					this.setState({resetToSavedState: true})
 				}
-				takenSpots.push(randSpot)
-				if(piece == 'yellow') {
-					newGrid[randSpot] = 'yellow'
-				} else if(piece == 'blue') {
-					newGrid[randSpot] = 'blue'
-				}	else if(piece == 'red') {
-					newGrid[randSpot] = 'red'
+			})
+			.catch(error => console.error(`Error in fetch: ${error.message}`))
+		if(this.state.resetToSavedState == false) {
+			this.getAllTimeBest()
+			this.getPersonalBest()
+			this.setState({playMode: true})
+			var newGrid = Array(64).fill(null)
+			var takenSpots = [0]
+			var yellowRandSpot = 0
+			while(takenSpots.includes(yellowRandSpot)) {
+				yellowRandSpot = Math.floor((Math.random() * 64))
+			}
+			newGrid[yellowRandSpot] = 'yellow'
+			takenSpots.push(yellowRandSpot)
+			var pieces = ['blue', 'red']
+			for(var i = 1; i <= this.state.level; i++) {
+				for(var piece in pieces) {
+					piece = pieces[piece]
+					var randSpot = 0
+					while(takenSpots.includes(randSpot)) {
+						randSpot = Math.floor((Math.random() * 64))
+					}
+					takenSpots.push(randSpot)
+					if(piece == 'yellow') {
+						newGrid[randSpot] = 'yellow'
+					} else if(piece == 'blue') {
+						newGrid[randSpot] = 'blue'
+					}	else if(piece == 'red') {
+						newGrid[randSpot] = 'red'
+					}
 				}
 			}
+			var newBluesLeft = this.state.level
+			this.setState({
+				grid: newGrid, 
+				currentScore: 0, 
+				bluesLeft: newBluesLeft
+			})
 		}
-		var newBluesLeft = this.state.level
-		this.setState({
-			grid: newGrid, 
-			currentScore: 0, 
-			bluesLeft: newBluesLeft
-		})
 	}	
 	
 	getAllTimeBest() {
@@ -98,9 +104,8 @@ class GameContainer extends React.Component {
       headers: {'Content-Type': 'application/json'}
     })
 		  .then(response => {
-		    if(response.ok) {
-					return response
-				} else {
+		    if(response.ok) return response
+				else {
 		      let errorMessage = `${response.status} (${response.statusText})`
 		      let error = new Error(errorMessage)
 		      throw(error)
@@ -135,9 +140,8 @@ class GameContainer extends React.Component {
       headers: {'Content-Type': 'application/json'}
     })
 		  .then(response => {
-		    if(response.ok) {
-					return response
-				} else {
+		    if(response.ok) return response
+				else {
 		      let errorMessage = `${response.status} (${response.statusText})`
 		      let error = new Error(errorMessage)
 		      throw(error)
@@ -168,15 +172,10 @@ class GameContainer extends React.Component {
 						var oldSpot = parseInt(grid.indexOf(spot))
 					}
 				}
-				if(e.keyCode == 37) {
-					var newSpot = oldSpot - 1
-				} else if(e.keyCode == 38) {
-					var newSpot = oldSpot - 8
-				}	else if(e.keyCode == 39) {
-					var newSpot = oldSpot + 1
-				}	else if(e.keyCode == 40) {
-					var newSpot = oldSpot + 8
-				}
+				if(e.keyCode == 37) var newSpot = oldSpot - 1
+				else if(e.keyCode == 38) var newSpot = oldSpot - 8
+				else if(e.keyCode == 39) var newSpot = oldSpot + 1
+				else if(e.keyCode == 40) var newSpot = oldSpot + 8
 				if(!(newSpot < 0 || newSpot > 63)) {
 					this.handleBlues(grid, newSpot)
 					this.handleReds(grid, newSpot)
@@ -184,10 +183,7 @@ class GameContainer extends React.Component {
 					newGrid[newSpot] = 'yellow'
 					newGrid[oldSpot] = null
 					var newCurrentScore = this.state.currentScore + 1
-					this.setState({
-						grid: newGrid, 
-						currentScore: newCurrentScore
-					})
+					this.setState({grid: newGrid, currentScore: newCurrentScore})
 				}	
 			}
 		}
@@ -198,16 +194,14 @@ class GameContainer extends React.Component {
 			body: JSON.stringify({currentState: this.state})
 		})
 			.then(response => {
-				if (response.ok) {return response} 
+				if(response.ok) return response 
 				else {
 					let errorMessage = `${response.status} (${response.statusText})`
 					let error = new Error(errorMessage);
 					throw(error)
 				}
 			})
-			.then(response => {
-				console.log(response)
-				response.json()})
+			.then(response => response.json())
 			.catch(error => console.error(`Error in fetch: ${error.message}`))
 	}
 	
@@ -245,7 +239,7 @@ class GameContainer extends React.Component {
 			      throw(error)
 			    }
 			  })
-			  .then(response => {response.json()})
+			  .then(response => response.json())
 				.then(body => {
 					this.getAllTimeBest()
 					this.getPersonalBest()
