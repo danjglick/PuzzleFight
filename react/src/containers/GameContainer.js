@@ -147,7 +147,7 @@ class GameContainer extends React.Component {
 					this.handleReds(grid, newSpot)
 					var newGrid = grid
 					newGrid[newSpot] = 'yellow'
-					newGrid[oldSpot] = null
+					newGrid[oldSpot] = 0
 					var newCurrentScore = this.state.currentScore + 1
 					this.setState({grid: newGrid, currentScore: newCurrentScore})
 				}	
