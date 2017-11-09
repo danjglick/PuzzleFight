@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index]
       resources :levels, only: [:index]
       resources :scores, only: [:index, :create]
-      resources :gamestates
+      resources :gamestates, only: [:index, :create]
     end
   end
 end

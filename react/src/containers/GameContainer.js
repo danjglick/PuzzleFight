@@ -6,7 +6,7 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(null),
-			level: 20,
+			level: 10,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
