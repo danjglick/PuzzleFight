@@ -28,25 +28,32 @@ class GameContainer extends React.Component {
 	}
 	
 	resetGame() {
-		//GET this.state from db (POSTED at beginning of movePlayer). setState to response body
-		// fetch('http://localhost:3000/api/v1/gamestates', {
-		// 	credentials: 'same-origin',
-		// 	method: 'GET',
-		// 	headers: {'Content-Type': 'application/json'}
-		// })
-		// 	.then(response => {
-		// 		if(response.ok) {
-		// 			return response
-		// 		} else {
-		// 			let errorMessage = `${response.status} (${response.statusText})`
-		// 			let error = new Error(errorMessage)
-		// 			throw(error)
-		// 		}
-		// 	})
-		// 	.then(response => response.json())
-		// 	.then(body => {this.setState(body)})
-		// 	.catch(error => console.error(`Error in fetch: ${error.message}`))
-		//may have to delete the following 2 function calls
+		fetch('http://localhost:3000/api/v1/gamestates', {
+			credentials: 'same-origin',
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		})
+			.then(response => {
+				if(response.ok) {
+					return response
+				} else {
+					let errorMessage = `${response.status} (${response.statusText})`
+					let error = new Error(errorMessage)
+					throw(error)
+				}
+			})
+			.then(response => response.json())
+			// .then(body => {
+			// 	if(!this.state.grid.includes('yellow') &&
+			// 		!this.state.grid.includes('blue') &&
+			// 		!this.state.grid.includes('red')
+			// 	) {
+			// 		var savedState = body[0].current_state
+			// 		this.setState(savedState)
+			// 	}
+			// })
+			.catch(error => console.error(`Error in fetch: ${error.message}`))
+		//what do to with rest of resetGame()...?
 		this.getAllTimeBest()
 		this.getPersonalBest()
 		this.setState({playMode: true})
@@ -104,8 +111,9 @@ class GameContainer extends React.Component {
 				var newAllTimeBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 					var userScore = body.all_scores[i]
-					if((userScore.level_id == this.state.level) 
-					&& (userScore.score < newAllTimeBest || newAllTimeBest == 0)) {
+					if((userScore.level_id == this.state.level) && 
+						(userScore.score < newAllTimeBest || newAllTimeBest == 0)
+					) {
 						newAllTimeBest = userScore.score
 						var newUsernameAllTimeBest = userScore.username
 						var newDateAllTimeBest = userScore.created_at.slice(0, 4)
@@ -150,22 +158,6 @@ class GameContainer extends React.Component {
 	}
 	
 	movePlayer(e) {
-		fetch('http://localhost:3000/api/v1/gamestates', {
-			credentials: 'same-origin',
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({currentState: this.state})
-		})
-			.then(response => {
-				if (response.ok) {return response} 
-				else {
-					let errorMessage = `${response.status} (${response.statusText})`
-					let error = new Error(errorMessage);
-					throw(error)
-				}
-			})
-			.then(response => {response.json()})
-			.catch(error => console.error(`Error in fetch: ${error.message}`))
 		if(this.state.playMode == true) {
 			var grid = this.state.grid;
 			var arrows = [37, 38, 39, 40]
@@ -199,6 +191,24 @@ class GameContainer extends React.Component {
 				}	
 			}
 		}
+		fetch('http://localhost:3000/api/v1/gamestates', {
+			credentials: 'same-origin',
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({currentState: this.state})
+		})
+			.then(response => {
+				if (response.ok) {return response} 
+				else {
+					let errorMessage = `${response.status} (${response.statusText})`
+					let error = new Error(errorMessage);
+					throw(error)
+				}
+			})
+			.then(response => {
+				console.log(response)
+				response.json()})
+			.catch(error => console.error(`Error in fetch: ${error.message}`))
 	}
 	
 	handleBlues(grid, newSpot) {
