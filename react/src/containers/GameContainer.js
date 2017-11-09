@@ -5,16 +5,15 @@ class GameContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			grid: Array(64).fill(null),
-			level: 15,
+			grid: Array(64).fill(0),
+			level: 10,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
 			bluesLeft: 0,
 			playMode: false,
 			usernameAllTimeBest: 'username',
-			dateAllTimeBest: 'date',
-			resetToSavedState: false
+			dateAllTimeBest: 'date'
 		}
 		this.resetGame = this.resetGame.bind(this)
 		this.getAllTimeBest = this.getAllTimeBest.bind(this)
@@ -29,40 +28,23 @@ class GameContainer extends React.Component {
 	}
 	
 	resetGame() {
-		fetch('http://localhost:3000/api/v1/gamestates', {
-			credentials: 'same-origin',
-			method: 'GET',
-			headers: {'Content-Type': 'application/json'}
-		})
-			.then(response => {
-				if(response.ok) {
-					return response
-				} else {
-					let errorMessage = `${response.status} (${response.statusText})`
-					let error = new Error(errorMessage)
-					throw(error)
-				}
+		if(!this.state.grid.includes('yellow')) {
+			fetch('http://localhost:3000/api/v1/gamestates.json', {
+				credentials: 'same-origin',
+				method: 'GET',
+				headers: {'Content-Type': 'application/json'}
 			})
-			.then(response => {
-				response.json()
-			})
-			.then(body => {
-				debugger
-				if(!this.state.grid.includes('yellow') &&
-					!this.state.grid.includes('blue') &&
-					!this.state.grid.includes('red')
-				) {
+				.then(response => response.json())
+				.then(body => {
 					var savedState = body[0].current_state
 					this.setState(savedState)
-					this.setState({resetToSavedState: true})
-				}
-			})
-			.catch(error => console.error(`Error in fetch: ${error.message}`))
-		if(this.state.resetToSavedState == false) {
+				})
+				.catch(function(error) {console.log(error)})
+		} else {
 			this.getAllTimeBest()
 			this.getPersonalBest()
 			this.setState({playMode: true})
-			var newGrid = Array(64).fill(null)
+			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
 			var yellowRandSpot = 0
 			while(takenSpots.includes(yellowRandSpot)) {
@@ -103,14 +85,6 @@ class GameContainer extends React.Component {
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
     })
-		  .then(response => {
-		    if(response.ok) return response
-				else {
-		      let errorMessage = `${response.status} (${response.statusText})`
-		      let error = new Error(errorMessage)
-		      throw(error)
-		    }
-		  })
 		  .then(response => response.json())
 		  .then(body => {
 				var newAllTimeBest = 0
@@ -130,7 +104,7 @@ class GameContainer extends React.Component {
 					}
 				}
 			})
-		  .catch(error => console.error(`Error in fetch: ${error.message}`))
+		  .catch(function(error) {console.log(error)})
 	}
 	
 	getPersonalBest() {
@@ -139,14 +113,6 @@ class GameContainer extends React.Component {
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
     })
-		  .then(response => {
-		    if(response.ok) return response
-				else {
-		      let errorMessage = `${response.status} (${response.statusText})`
-		      let error = new Error(errorMessage)
-		      throw(error)
-		    }
-		  })
 		  .then(response => response.json())
 		  .then(body => {
 				var newPersonalBest = 0
@@ -158,7 +124,7 @@ class GameContainer extends React.Component {
 				}
 				this.setState({personalBest: newPersonalBest})
 			})
-		  .catch(error => console.error(`Error in fetch: ${error.message}`))		
+		  .catch(function(error) {console.log(error)})	
 	}
 	
 	movePlayer(e) {
@@ -193,16 +159,8 @@ class GameContainer extends React.Component {
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({currentState: this.state})
 		})
-			.then(response => {
-				if(response.ok) return response 
-				else {
-					let errorMessage = `${response.status} (${response.statusText})`
-					let error = new Error(errorMessage);
-					throw(error)
-				}
-			})
 			.then(response => response.json())
-			.catch(error => console.error(`Error in fetch: ${error.message}`))
+			.catch(function(error) {console.log(error)})
 	}
 	
 	handleBlues(grid, newSpot) {
@@ -231,20 +189,12 @@ class GameContainer extends React.Component {
 					score: this.state.currentScore
 				})
 	    })
-			  .then(response => {
-			    if (response.ok) {return response} 
-					else {
-			      let errorMessage = `${response.status} (${response.statusText})`
-			      let error = new Error(errorMessage);
-			      throw(error)
-			    }
-			  })
 			  .then(response => response.json())
 				.then(body => {
 					this.getAllTimeBest()
 					this.getPersonalBest()
 				})
-			  .catch(error => console.error(`Error in fetch: ${error.message}`))
+			  .catch(function(error) {console.log(error)})
 		}
 	}	
 	
@@ -275,7 +225,7 @@ class GameContainer extends React.Component {
 				spot = null
 				return(<h1 className='redSpot'>{spot}</h1>)
 			} else {
-				return(<h1 className='spot'>{spot}</h1>
+				return(<h1 className='spot'></h1>
 			)}
 		})
 		return(
