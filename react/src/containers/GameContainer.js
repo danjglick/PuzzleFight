@@ -28,19 +28,19 @@ class GameContainer extends React.Component {
 	}
 	
 	resetGame() {
-		if(!this.state.grid.includes('yellow')) {
-			fetch('http://localhost:3000/api/v1/gamestates.json', {
-				credentials: 'same-origin',
-				method: 'GET',
-				headers: {'Content-Type': 'application/json'}
-			})
-				.then(response => response.json())
-				.then(body => {
-					var savedState = body[0].current_state
-					this.setState(savedState)
-				})
-				.catch(function(error) {console.log(error)})
-		} else {
+		// if(!this.state.grid.includes('yellow')) {
+		// 	fetch('http://localhost:3000/api/v1/gamestates.json', {
+		// 		credentials: 'same-origin',
+		// 		method: 'GET',
+		// 		headers: {'Content-Type': 'application/json'}
+		// 	})
+		// 		.then(response => response.json())
+		// 		.then(body => {
+		// 			var savedState = body[0].current_state
+		// 			this.setState(savedState)
+		// 		})
+		// 		.catch(function(error) {console.log(error)})
+		// } else {
 			this.getAllTimeBest()
 			this.getPersonalBest()
 			this.setState({playMode: true})
@@ -76,7 +76,7 @@ class GameContainer extends React.Component {
 				currentScore: 0, 
 				bluesLeft: newBluesLeft
 			})
-		}
+		// }
 	}	
 	
 	getAllTimeBest() {
