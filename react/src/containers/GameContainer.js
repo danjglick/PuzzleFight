@@ -110,7 +110,7 @@ class GameContainer extends React.Component {
 	}	
 	
 	getAllTimeBest() {
-		fetch('http://localhost:3000/api/v1/scores', {
+		fetch('http://localhost:3000/api/v1/scores.json', {
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
@@ -149,7 +149,9 @@ class GameContainer extends React.Component {
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
     })
-		  .then(response => response.json())
+		  .then(response => {
+				return response.json()
+			})
 		  .then(body => {
 				var newPersonalBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
@@ -217,7 +219,7 @@ class GameContainer extends React.Component {
 				currentScore: this.state.currentScore,
 				level: this.state.level
 			})
-			fetch('http://localhost:3000/api/v1/scores', {
+			fetch('http://localhost:3000/api/v1/scores.json', {
 				credentials: 'same-origin',
 	      method: 'POST',
 	      headers: {'Content-Type': 'application/json'},
