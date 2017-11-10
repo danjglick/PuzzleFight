@@ -4,7 +4,6 @@
   background-color: #1C1C1C;
   color: white;
   font-size: 13pt;
-  // font-size: 1.01em;
   font-family: 'HelveticaNeue';
 }
 
@@ -16,7 +15,7 @@
   font-weight: normal;
   text-transform: uppercase;
   font-family: 'FranchiseRegular','HelveticaNeue-Bold','League Gothic','Impact',sans-serif;
-  font-size: 100px;
+  font-size: 35px;
   margin-bottom: 35px;
   margin-left: 10px;
   color: #B19CD9;
@@ -25,17 +24,28 @@
   text-align: center;
 }
 
-.introBox {text-align: center}
-
-.description {
-  margin: 0px auto;
-  width: 500px;
-  padding: 0px;
-  margin-bottom: 20px;
+.navbar {
+  display: flex;
+  justify-content: space-between;
 }
 
-.description span {
-  color: #B19CD9;
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 300px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .hi-user {
@@ -50,14 +60,9 @@
 }
 
 .sign-up-in-out {
-  margin: 0px auto;
-  width: 30%;
-  padding: 0px;
-  margin-bottom: 40px;
-}
-
-.sign-up-in-out span {
-  color: #B19CD9;
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sign-up-in-out a {color: white}
@@ -66,8 +71,8 @@
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 5px;
-  margin-right: 45px;
-  margin-left: 45px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .start {
@@ -89,11 +94,14 @@ select {
   color: #B19CD9;
 }
 
+.grid {
+  padding: 10px 25%;
+}
+
 .spot {
   border: 1px solid #424242;
   float: left;
   width: 12%;
-  height: 0;
   padding-bottom: 12%;
   margin: 0%;
 }
