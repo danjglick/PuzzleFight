@@ -13,7 +13,8 @@ class GameContainer extends React.Component {
 			bluesLeft: 0,
 			playMode: false,
 			usernameAllTimeBest: 'n/a',
-			dateAllTimeBest: 'n/a'
+			dateAllTimeBest: 'n/a',
+			firstTime: false
 		}
 		this.changeLevel = this.changeLevel.bind(this)
 		this.resetGame = this.resetGame.bind(this)
@@ -41,11 +42,16 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
-					var savedState = body[0].current_state
-					this.setState(savedState)
+					if(body[0].current_state.grid.includes('yellow')) {
+						var savedState = body[0].current_state
+						this.setState(savedState)
+					} else {
+						this.setState({firstTime: true})
+					}
 				})
 				.catch(function(error) {console.log(error)})
-		} else {
+		}
+		if(this.state.grid.includes('yellow') || this.state.firstTime == true) {
 			this.getAllTimeBest()
 			this.getPersonalBest()
 			this.setState({playMode: true})
@@ -96,7 +102,7 @@ class GameContainer extends React.Component {
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 					var userScore = body.all_scores[i]
 					if((userScore.level_id == this.state.level) && 
-						(userScore.score < newAllTimeBest || newAllTimeBest == 0)
+						(newAllTimeBest == 0 || userScore.score < newAllTimeBest)
 					) {
 						newAllTimeBest = userScore.score
 						var newUsernameAllTimeBest = userScore.username
@@ -106,6 +112,12 @@ class GameContainer extends React.Component {
 							usernameAllTimeBest: newUsernameAllTimeBest,
 							dateAllTimeBest: newDateAllTimeBest
 						}) 
+					} else {
+						this.setState({
+							allTimeBest: 0, 
+							usernameAllTimeBest: 'n/a',
+							dateAllTimeBest: 'n/a'
+						})
 					}
 				}
 			})
