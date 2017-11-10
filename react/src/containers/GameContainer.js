@@ -111,14 +111,15 @@ class GameContainer extends React.Component {
 							allTimeBest: newAllTimeBest, 
 							usernameAllTimeBest: newUsernameAllTimeBest,
 							dateAllTimeBest: newDateAllTimeBest
-						}) 
-					} else {
-						this.setState({
-							allTimeBest: 0, 
-							usernameAllTimeBest: 'n/a',
-							dateAllTimeBest: 'n/a'
 						})
 					}
+				}
+				if(newAllTimeBest == 0) {
+					this.setState({
+						allTimeBest: 0, 
+						usernameAllTimeBest: 'n/a',
+						dateAllTimeBest: 'n/a'
+					})
 				}
 			})
 		  .catch(function(error) {console.log(error)})
