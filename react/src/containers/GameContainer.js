@@ -14,7 +14,8 @@ class GameContainer extends React.Component {
 			playMode: false,
 			usernameAllTimeBest: 'n/a',
 			dateAllTimeBest: 'n/a',
-			firstTime: false
+			firstTime: false,
+			currentUser: null
 		}
 		this.changeLevel = this.changeLevel.bind(this)
 		this.resetGame = this.resetGame.bind(this)
@@ -30,10 +31,27 @@ class GameContainer extends React.Component {
 	}
 	
 	changeLevel(newLevel) {
-		this.setState({level: newLevel}, ()=>this.resetGame())
+		fetch('http://localhost:3000/api/v1/gamestates.json', {
+			credentials: 'same-origin',
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		})
+			.then(response => response.json())
+			.then(body => {this.setState({level: newLevel}, ()=>this.resetGame())})
+			.catch(function(error) {console.log(error)})
 	}
 	
 	resetGame() {
+		fetch('http://localhost:3000/api/v1/gamestates', {
+			credentials: 'same-origin',
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({currentState: this.state})
+		})
+			.then(response => response.json())
+			.catch(function(error) {console.log(error)})
+		this.getAllTimeBest()
+		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
 			fetch('http://localhost:3000/api/v1/gamestates.json', {
 				credentials: 'same-origin',
@@ -42,7 +60,9 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
-					if(body[0].current_state.grid.includes('yellow')) {
+					if(body[0].current_state.currentUser == this.state.currentUser
+					&& body[0].current_state.currentUser !== null 
+					) {
 						var savedState = body[0].current_state
 						this.setState(savedState)
 					} else {
@@ -51,9 +71,8 @@ class GameContainer extends React.Component {
 				})
 				.catch(function(error) {console.log(error)})
 		}
-		if(this.state.grid.includes('yellow') || this.state.firstTime == true) {
-			this.getAllTimeBest()
-			this.getPersonalBest()
+		if(this.state.grid.includes('yellow') 
+		|| this.state.firstTime == true) {
 			this.setState({playMode: true})
 			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
@@ -101,9 +120,8 @@ class GameContainer extends React.Component {
 				var newAllTimeBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 					var userScore = body.all_scores[i]
-					if((userScore.level_id == this.state.level) && 
-						(newAllTimeBest == 0 || userScore.score < newAllTimeBest)
-					) {
+					if((userScore.level_id == this.state.level) 
+					&& (newAllTimeBest == 0 || userScore.score < newAllTimeBest)) {
 						newAllTimeBest = userScore.score
 						var newUsernameAllTimeBest = userScore.username
 						var newDateAllTimeBest = userScore.created_at.slice(0, 4)
@@ -136,11 +154,12 @@ class GameContainer extends React.Component {
 				var newPersonalBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 					var userScore = body.all_scores[i]
-					if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
+					if(userScore.user_id == body.current_user.id 
+					&& userScore.level_id == this.state.level) {
 						newPersonalBest = userScore.score
 					}
 				}
-				this.setState({personalBest: newPersonalBest})
+				this.setState({personalBest: newPersonalBest, currentUser: body.current_user.username})
 			})
 		  .catch(function(error) {console.log(error)})	
 	}

@@ -31,7 +31,8 @@ class StatusBarContainer extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.changeLevel(this.state.value)
+    var newLevel = this.state.value
+    this.props.changeLevel(newLevel)
   }
 
   render() {
@@ -72,9 +73,18 @@ class StatusBarContainer extends React.Component {
             <option value='30'>Level 30</option>
           </select>
         </form>
-        <div className='statusBar'> <div className='header'>All-Time Best&nbsp;&nbsp;|&nbsp;&nbsp;</div>{this.props.allTimeBest} by {this.props.usernameAllTimeBest} in {this.props.dateAllTimeBest}</div>
-        <div className='statusBar'><div className='header'>Personal Best&nbsp;&nbsp;|&nbsp;&nbsp;</div>{this.props.personalBest}</div>   
-        <div className='statusBar'><div className='header'>Current Score&nbsp;&nbsp;|&nbsp;&nbsp;</div>{this.props.currentScore}</div>
+        <div className='statusBar'>
+          <div className='header'>All-Time Best&nbsp;&nbsp;|&nbsp;&nbsp;</div>
+          {this.props.allTimeBest} by {this.props.usernameAllTimeBest} in {this.props.dateAllTimeBest}
+        </div>
+        <div className='statusBar'>
+          <div className='header'>Personal Best&nbsp;&nbsp;|&nbsp;&nbsp;</div>
+          {this.props.personalBest}
+        </div>   
+        <div className='statusBar'>
+          <div className='header'>Current Score&nbsp;&nbsp;|&nbsp;&nbsp;</div>
+          {this.props.currentScore}
+        </div>
       </div> 
     )
   }
