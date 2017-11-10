@@ -1,5 +1,5 @@
 import React from 'react'
-import StatusBar from '../Components/StatusBar'
+import StatusBarContainer from './StatusBarContainer'
 
 class GameContainer extends React.Component {
 	constructor(props) {
@@ -232,7 +232,7 @@ class GameContainer extends React.Component {
 		})
 		return(
 			<div>
-				<StatusBar
+				<StatusBarContainer
 					resetGame={this.resetGame} 
 					movePlayer={this.movePlayer}
 					level={this.state.level}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-class StatusBar extends React.Component {
+class StatusBarContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {value: '1'}
@@ -64,4 +64,4 @@ class StatusBar extends React.Component {
   }
 }
 
-export default StatusBar
+export default StatusBarContainer
