@@ -253,13 +253,13 @@ class GameContainer extends React.Component {
 	render() {
 		var grid = this.state.grid.map(spot => {
 			if(spot == 'yellow') {
-				return(<h1 className='yellowSpot'></h1>)
+				return(<div className='yellowSpot'></div>)
 			} else if(spot == 'blue') {
-				return(<h1 className='blueSpot'></h1>)
+				return(<div className='blueSpot'></div>)
 			} else if(spot == 'red') {
-				return(<h1 className='redSpot'></h1>)
+				return(<div className='redSpot'></div>)
 			} else {
-				return(<h1 className='spot'></h1>
+				return(<div className='spot'></div>
 			)}
 		})
 		return(
@@ -276,7 +276,7 @@ class GameContainer extends React.Component {
 					changeLevel={this.changeLevel}
 					grid={this.state.grid}
 				/>
-				<div>{grid}</div>
+				<div className='grid'>{grid}</div>
 			</div>
 		)
 	}
