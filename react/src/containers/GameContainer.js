@@ -12,8 +12,8 @@ class GameContainer extends React.Component {
 			currentScore: 0,
 			bluesLeft: 0,
 			playMode: false,
-			usernameAllTimeBest: 'username',
-			dateAllTimeBest: 'date'
+			usernameAllTimeBest: 'n/a',
+			dateAllTimeBest: 'n/a'
 		}
 		this.changeLevel = this.changeLevel.bind(this)
 		this.resetGame = this.resetGame.bind(this)
