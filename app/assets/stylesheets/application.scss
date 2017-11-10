@@ -3,7 +3,8 @@
 * {
   background-color: #1C1C1C;
   color: white;
-  font-size: 1.01em;
+  font-size: 13pt;
+  // font-size: 1.01em;
   font-family: 'HelveticaNeue';
 }
 
@@ -23,8 +24,10 @@
 .introBox {text-align: center}
 
 .description {
-  color: white;
-  margin: 20px;
+  margin: 0px auto;
+  width: 47.5%;
+  padding: 0px;
+  margin-bottom: 40px;
 }
 
 .hi-user {
