@@ -37,8 +37,8 @@ class StatusBarContainer extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="submit" value="Play" />
+        <form className='statusBar' onSubmit={this.handleSubmit}>
+          <input type='submit' value='Start'/>
           <select value={this.state.value} onChange={this.handleChange}>
             <option value='1'>Level 1</option>
             <option value='2'>Level 2</option>
@@ -72,9 +72,11 @@ class StatusBarContainer extends React.Component {
             <option value='30'>Level 30</option>
           </select>
         </form>
+        <div className='statusBar'>
         ...AllTimeBest:{this.props.allTimeBest}({this.props.usernameAllTimeBest} {this.props.dateAllTimeBest})
         ...PersonalBest:{this.props.personalBest}
-        ...CurrentScore:{this.props.currentScore} 
+        ...CurrentScore:{this.props.currentScore}
+        </div> 
       </div> 
     )
   }
