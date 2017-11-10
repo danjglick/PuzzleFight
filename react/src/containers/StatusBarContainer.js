@@ -3,9 +3,25 @@ import React from 'react'
 class StatusBarContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {value: '1'}
+    this.state = {value: 1}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillMount() {
+    if(!this.props.grid.includes('yellow')) {
+      fetch('http://localhost:3000/api/v1/gamestates.json', {
+        credentials: 'same-origin',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      })
+        .then(response => response.json())
+        .then(body => {
+          var level = body[0].current_state.level
+          this.state = {value: level}
+        })
+        .catch(function(error) {console.log(error)})
+    }
   }
 
   handleChange(e) {
@@ -22,6 +38,7 @@ class StatusBarContainer extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <input type="submit" value="Play" />
           <select value={this.state.value} onChange={this.handleChange}>
             <option value='1'>Level 1</option>
             <option value='2'>Level 2</option>
@@ -54,7 +71,6 @@ class StatusBarContainer extends React.Component {
             <option value='29'>Level 29</option>
             <option value='30'>Level 30</option>
           </select>
-          <input type="submit" value="Start!" />
         </form>
         ...AllTimeBest:{this.props.allTimeBest}({this.props.usernameAllTimeBest} {this.props.dateAllTimeBest})
         ...PersonalBest:{this.props.personalBest}
