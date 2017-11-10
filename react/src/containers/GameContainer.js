@@ -6,14 +6,14 @@ class GameContainer extends React.Component {
 		super(props)
 		this.state = {
 			grid: Array(64).fill(0),
-			level: 20,
+			level: 1,
 			allTimeBest: 0,
 			personalBest: 0,
 			currentScore: 0,
 			bluesLeft: 0,
 			playMode: false,
-			usernameAllTimeBest: 'username',
-			dateAllTimeBest: 'date'
+			usernameAllTimeBest: 'n/a',
+			dateAllTimeBest: 'n/a'
 		}
 		this.changeLevel = this.changeLevel.bind(this)
 		this.resetGame = this.resetGame.bind(this)
@@ -242,6 +242,7 @@ class GameContainer extends React.Component {
 					usernameAllTimeBest={this.state.usernameAllTimeBest}
 					dateAllTimeBest={this.state.dateAllTimeBest}
 					changeLevel={this.changeLevel}
+					grid={this.state.grid}
 				/>
 				<div>{grid}</div>
 			</div>
