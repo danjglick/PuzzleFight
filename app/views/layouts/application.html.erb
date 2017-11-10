@@ -10,19 +10,17 @@
     <h1 class='logoBar'>PuzzleFight!</h1>
     <div class="introBox">
       <div class='description'>
-        <p>Ready to outsmart your friends?</p>
-        <p>
-          Pick a level, then double-click 'Start'. Use the keyboard
-          to move the yellow piece around the board. Your goal is to capture all of the blue pieces in as 
-          few moves as possible. But tread thoughtfully: accidentally capture a red piece, and your 
-          score will increase by a random number between 2 and 5. Click 'Start' again at any time to 
-          randomize the puzzle.
-        </p> 
-        <p>The possibilies - and the possible strategies - are endless.</p>  
+        <span>Ready to outsmart your friends?</span>
+        Pick a level, then double-click 'Start'. Use the keyboard
+        to move the yellow piece around the board. Your goal is to capture all of the blue pieces in as 
+        few moves as possible. But tread thoughtfully: accidentally capture a red piece, and your 
+        score will increase by a random number between 2 and 5. Click 'Start' again at any time to 
+        randomize the puzzle.
+        <span>The possibilies - and the possible strategies - are endless.</span>  
       </div>
       <div class='sign-up-in-out'>
         <% if user_signed_in? %>
-          <ul class="hi-user">Welcome, <%= current_user.username %></ul>
+          <ul class="hi-user">Welcome, <span><%= current_user.username %></span></ul>
           <ul class="top-ul"><%= link_to 'Update Account', edit_user_registration_path, method: :get %></ul>
           <ul class="top-ul"><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></ul>
         <% else %>

@@ -8,6 +8,10 @@
   font-family: 'HelveticaNeue';
 }
 
+*:focus {
+  outline: 0;
+}
+
 .logoBar {
   font-weight: normal;
   text-transform: uppercase;
@@ -25,9 +29,13 @@
 
 .description {
   margin: 0px auto;
-  width: 47.5%;
+  width: 500px;
   padding: 0px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+}
+
+.description span {
+  color: #B19CD9;
 }
 
 .hi-user {
@@ -48,6 +56,10 @@
   margin-bottom: 40px;
 }
 
+.sign-up-in-out span {
+  color: #B19CD9;
+}
+
 .sign-up-in-out a {color: white}
 
 .statusBar {
@@ -66,8 +78,6 @@
   width: 75px;
   height: 30px;
 }
-
-input:focus {outline:0}
 
 select {
   border-color: #1C1C1C;
