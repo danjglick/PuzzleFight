@@ -15,7 +15,7 @@
   font-weight: normal;
   text-transform: uppercase;
   font-family: 'FranchiseRegular','HelveticaNeue-Bold','League Gothic','Impact',sans-serif;
-  font-size: 35px;
+  font-size: 45px;
   margin-bottom: 35px;
   color: #B19CD9;
   text-shadow: #573B8C -4px 4px 0;
@@ -73,13 +73,13 @@
 .statusBar {
   display: inline-block;
   margin-top: 20px;
-  margin-bottom: 0px;
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-bottom: 0;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .start {
-  margin-left: 400px;
+  margin-left: 395px;
   margin-right: -11px;
   border-radius: 5px;
   border: none;
