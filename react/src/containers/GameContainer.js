@@ -42,14 +42,6 @@ class GameContainer extends React.Component {
 	}
 	
 	resetGame() {
-		fetch('http://localhost:3000/api/v1/gamestates', {
-			credentials: 'same-origin',
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({currentState: this.state})
-		})
-			.then(response => response.json())
-			.catch(function(error) {console.log(error)})
 		this.getAllTimeBest()
 		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
@@ -60,8 +52,8 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
-					if(body[0].current_state.currentUser == this.state.currentUser
-					&& body[0].current_state.currentUser !== null 
+					if((body[0].current_state.currentUser == 'daniel' && body[0].current_state.currentUser !== null)
+					|| this.state.currentUser == null 
 					) {
 						var savedState = body[0].current_state
 						this.setState(savedState)
@@ -73,7 +65,7 @@ class GameContainer extends React.Component {
 		}
 		if(this.state.grid.includes('yellow') 
 		|| this.state.firstTime == true) {
-			this.setState({playMode: true})
+			this.setState({playMode: true, firstTime: false})
 			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
 			var yellowRandSpot = 0
@@ -107,6 +99,14 @@ class GameContainer extends React.Component {
 				bluesLeft: newBluesLeft
 			})
 		}
+		fetch('http://localhost:3000/api/v1/gamestates', {
+			credentials: 'same-origin',
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({currentState: this.state})
+		})
+			.then(response => response.json())
+			.catch(function(error) {console.log(error)})
 	}	
 	
 	getAllTimeBest() {
