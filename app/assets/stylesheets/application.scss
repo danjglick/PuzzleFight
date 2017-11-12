@@ -15,9 +15,9 @@
   font-weight: normal;
   text-transform: uppercase;
   font-family: 'FranchiseRegular','HelveticaNeue-Bold','League Gothic','Impact',sans-serif;
-  font-size: 80px;
-  margin-bottom: 35px;
-  margin-top: 5px;
+  font-size: 4em;
+  margin-bottom: 2%;
+  margin-top: -.5%;
   color: #B19CD9;
   text-shadow: #573B8C -4px 4px 0;
 }
@@ -33,10 +33,17 @@
   width: 100px;
   display: flex;
   justify-content: space-between;
-  padding: 2.5% 12.5%;
+  padding: 1.5% 22%;
 }
 
-.dropdown-right {white-space: nowrap} 
+.dropdown-right {
+  white-space: nowrap;
+  padding-left: 0;
+} 
+
+.dropdown-left {
+  padding-right: 0;
+}
 
 .dropdown-content {
   display: none;
@@ -46,14 +53,15 @@
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+  display: block
 }
 
-.dropdown:hover {color: #B19CD9}
+.dropdown:hover {
+  color: #B19CD9
+}
 
 .statusBar {
   display: inline-block;
-  margin-top: 20px;
   margin-bottom: 0;
   margin-right: 10px;
   margin-left: 10px;
