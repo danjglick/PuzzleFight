@@ -15,71 +15,64 @@
   font-weight: normal;
   text-transform: uppercase;
   font-family: 'FranchiseRegular','HelveticaNeue-Bold','League Gothic','Impact',sans-serif;
-  font-size: 45px;
-  margin-bottom: 35px;
+  font-size: 4em;
+  margin-bottom: 2%;
+  margin-top: -.5%;
   color: #B19CD9;
   text-shadow: #573B8C -4px 4px 0;
-  margin-top: 5px;
-  text-align: center;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
-  margin: 0 20px;
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
-  width: 100px;
   display: flex;
   justify-content: space-between;
+  padding: 1.5% 22%;
+}
+
+.dropdown-right {
+  white-space: nowrap;
+  padding-left: 0;
+} 
+
+.dropdown-left {
+  padding-right: 0;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    width: 300px;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  width: 60%;
+  z-index: 1;
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+  display: block
 }
 
-.hi-user {
-  color: white;
-  margin: 0;
-  padding: 0px;
+.dropdown:hover {
+  color: #B19CD9
 }
 
-.top-ul {
-  margin: 0;
-  padding: 0px;
-}
-
-.sign-up-in-out {
-  margin-top: 12px;
-  width: 600px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.sign-up-in-out a {color: white}
-
-.sign-up-in-out span {color: #B19CD9}
-
-.statusBar {
+.stat {
   display: inline-block;
-  margin-top: 20px;
   margin-bottom: 0;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 10pt;
+  margin-left: 10pt;
+}
+
+.bar {
+  width: 875px;
+  white-space: nowrap;
+  margin: 0 auto;
 }
 
 .start {
-  margin-left: 395px;
   margin-right: -11px;
   border-radius: 5px;
   border: none;
