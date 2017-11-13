@@ -36,7 +36,7 @@ class GameContainer extends React.Component {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
 		})
-			.then(response => {return response.json()})
+			.then(response => response.json())
 			.then(body => {this.setState({level: newLevel}, ()=>this.resetGame())})
 			.catch(function(error) {console.log(error)})
 	}
@@ -50,11 +50,12 @@ class GameContainer extends React.Component {
 				method: 'GET',
 				headers: {'Content-Type': 'application/json'}
 			})
-				.then(response => {return response.json()})
+				.then(response => response.json())
 				.then(body => {
-					if((body[0].current_state.currentUser == 'daniel' && body[0].current_state.currentUser !== null)
-					|| this.state.currentUser == null 
-					) {
+					console.log(body[0].current_state.currentUser)
+					if(body[0].current_state.currentUser == this.state.currentUser 
+					&& body[0].current_state.grid.includes('yellow')
+					&& !!this.state.currentUser) {
 						var savedState = body[0].current_state
 						this.setState(savedState)
 					} else {
@@ -63,8 +64,7 @@ class GameContainer extends React.Component {
 				})
 				.catch(function(error) {console.log(error)})
 		}
-		if(this.state.grid.includes('yellow') 
-		|| this.state.firstTime == true) {
+		if(this.state.grid.includes('yellow') || this.state.firstTime == true) {
 			this.setState({playMode: true, firstTime: false})
 			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
@@ -83,13 +83,9 @@ class GameContainer extends React.Component {
 						randSpot = Math.floor((Math.random() * 64))
 					}
 					takenSpots.push(randSpot)
-					if(piece == 'yellow') {
-						newGrid[randSpot] = 'yellow'
-					} else if(piece == 'blue') {
-						newGrid[randSpot] = 'blue'
-					}	else if(piece == 'red') {
-						newGrid[randSpot] = 'red'
-					}
+					if(piece == 'yellow') newGrid[randSpot] = 'yellow' 
+					else if(piece == 'blue') newGrid[randSpot] = 'blue'
+					else if(piece == 'red') newGrid[randSpot] = 'red'
 				}
 			}
 			var newBluesLeft = this.state.level
@@ -105,7 +101,7 @@ class GameContainer extends React.Component {
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({currentState: this.state})
 		})
-			.then(response => {return response.json()})
+			.then(response => response.json())
 			.catch(function(error) {console.log(error)})
 	}	
 	
@@ -115,7 +111,7 @@ class GameContainer extends React.Component {
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
     })
-		  .then(response => {return response.json()})
+		  .then(response => response.json())
 		  .then(body => {
 				var newAllTimeBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
@@ -149,17 +145,20 @@ class GameContainer extends React.Component {
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
     })
-		  .then(response => {return response.json()})
+		  .then(response => response.json())
 		  .then(body => {
 				var newPersonalBest = 0
-				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
-					var userScore = body.all_scores[i]
-					if(userScore.user_id == body.current_user.id 
-					&& userScore.level_id == this.state.level) {
-						newPersonalBest = userScore.score
+				var newCurrentUser = null
+				if(body.current_user) {
+					newCurrentUser = body.current_user.username
+					for(var i=0; i<Object.keys(body.all_scores).length; i++) {
+						var userScore = body.all_scores[i]
+						if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
+							newPersonalBest = userScore.score
+						}
 					}
 				}
-				this.setState({personalBest: newPersonalBest, currentUser: body.current_user.username})
+				this.setState({personalBest: newPersonalBest, currentUser: newCurrentUser})
 			})
 		  .catch(function(error) {console.log(error)})	
 	}
@@ -196,7 +195,7 @@ class GameContainer extends React.Component {
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({currentState: this.state})
 		})
-			.then(response => {return response.json()})
+			.then(response => response.json())
 			.catch(function(error) {console.log(error)})
 	}
 	
@@ -226,7 +225,7 @@ class GameContainer extends React.Component {
 					score: this.state.currentScore
 				})
 	    })
-		  .then(response => {return response.json()})
+		  .then(response => response.json())
 				.then(body => {
 					this.getAllTimeBest()
 					this.getPersonalBest()
