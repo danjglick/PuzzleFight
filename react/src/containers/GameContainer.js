@@ -37,7 +37,7 @@ class GameContainer extends React.Component {
 			headers: {'Content-Type': 'application/json'}
 		})
 			.then(response => response.json())
-			.then(body => {this.setState({level: newLevel}, ()=>this.resetGame())})
+			.then(body => {this.setState({level: newLevel}, () => this.resetGame())})
 			.catch(function(error) {console.log(error)})
 	}
 	
@@ -52,7 +52,6 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
-					console.log(body[0].current_state.currentUser)
 					if(body[0].current_state.currentUser == this.state.currentUser 
 					&& body[0].current_state.grid.includes('yellow')
 					&& !!this.state.currentUser) {
@@ -153,7 +152,8 @@ class GameContainer extends React.Component {
 					newCurrentUser = body.current_user.username
 					for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 						var userScore = body.all_scores[i]
-						if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
+						if(userScore.user_id == body.current_user.id 
+						&& userScore.level_id == this.state.level) {
 							newPersonalBest = userScore.score
 						}
 					}
