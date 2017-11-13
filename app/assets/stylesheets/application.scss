@@ -30,7 +30,6 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  width: 100px;
   display: flex;
   justify-content: space-between;
   padding: 1.5% 22%;
@@ -48,7 +47,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  width: 300px;
+  width: 60%;
   z-index: 1;
 }
 
@@ -60,15 +59,20 @@
   color: #B19CD9
 }
 
-.statusBar {
+.stat {
   display: inline-block;
   margin-bottom: 0;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 10pt;
+  margin-left: 10pt;
+}
+
+.bar {
+  width: 875px;
+  white-space: nowrap;
+  margin: 0 auto;
 }
 
 .start {
-  margin-left: 395px;
   margin-right: -11px;
   border-radius: 5px;
   border: none;
