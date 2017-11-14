@@ -40,31 +40,40 @@ class GameContainer extends React.Component {
 			.then(body => {this.setState({level: newLevel}, () => this.resetGame())})
 			.catch(function(error) {console.log(error)})
 	}
-	
+
 	resetGame() {
+		this.setState({playMode: true})
 		this.getAllTimeBest()
 		this.getPersonalBest()
-		if(!this.state.grid.includes('yellow')) {
-			fetch('http://localhost:3000/api/v1/gamestates.json', {
-				credentials: 'same-origin',
-				method: 'GET',
-				headers: {'Content-Type': 'application/json'}
-			})
-				.then(response => response.json())
-				.then(body => {
-					if(body[0].current_state.currentUser == this.state.currentUser 
+		fetch('http://localhost:3000/api/v1/scores', {
+			credentials: 'same-origin',
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'}
+    })
+		  .then(response => response.json())
+		  .then(body => {this.setState({currentUser: body.current_user.username})})
+			.catch(function(error) {console.log(error)})
+		fetch('http://localhost:3000/api/v1/gamestates.json', {
+			credentials: 'same-origin',
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		})
+			.then(response => response.json())
+			.then(body => {
+				console.log(body[0].current_state.currentUser, this.state.currentUser, this.state.currentUser == body[0].current_state.curent_user, !this.state.grid.includes('yellow'), body[0].current_state.grid.includes('yellow'))
+				if(!!this.state.currentUser
+					&& this.state.currentUser == body[0].current_state.currentUser
+					&& !this.state.grid.includes('yellow')
 					&& body[0].current_state.grid.includes('yellow')
-					&& !!this.state.currentUser) {
-						var savedState = body[0].current_state
-						this.setState(savedState)
-					} else {
-						this.setState({firstTime: true})
-					}
-				})
-				.catch(function(error) {console.log(error)})
-		}
-		if(this.state.grid.includes('yellow') || this.state.firstTime == true) {
-			this.setState({playMode: true, firstTime: false})
+				) {
+					console.log('grabbing prev state')
+					var savedState = body[0].current_state
+					this.setState(savedState)
+				} else {this.setState({firstTime: true})}
+			})
+			.catch(function(error) {console.log(error)})
+		if(this.state.firstTime == true) {
+			this.setState({firstTime: false})
 			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
 			var yellowRandSpot = 0
@@ -102,7 +111,7 @@ class GameContainer extends React.Component {
 		})
 			.then(response => response.json())
 			.catch(function(error) {console.log(error)})
-	}	
+	}		
 	
 	getAllTimeBest() {
 		fetch('http://localhost:3000/api/v1/scores.json', {
