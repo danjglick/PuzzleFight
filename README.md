@@ -1,1 +1,1 @@
-# [PuzzleFight](https://puzzlefight.herokuapp.com)
+# [PuzzleFight](https://puzzle-fight.herokuapp.com)
