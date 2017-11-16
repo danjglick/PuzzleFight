@@ -32,7 +32,7 @@ class GameContainer extends React.Component {
 		document.addEventListener('keydown', this.movePlayer)
 	}
 	
-	changeLevel(newLevel) {
+	changeLevel(newLevel) {		
 		fetch(`${baseUrl}/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'GET',
@@ -48,6 +48,7 @@ class GameContainer extends React.Component {
 		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
 			fetch(`${baseUrl}/api/v1/gamestates.json`, {
+
 				credentials: 'same-origin',
 				method: 'GET',
 				headers: {'Content-Type': 'application/json'}
@@ -95,7 +96,7 @@ class GameContainer extends React.Component {
 				currentScore: 0, 
 				bluesLeft: newBluesLeft
 			})
-		}
+		}		
 		fetch(`${baseUrl}/api/v1/gamestates`, {
 			credentials: 'same-origin',
 			method: 'POST',
@@ -106,7 +107,7 @@ class GameContainer extends React.Component {
 			.catch(function(error) {console.log(error)})
 	}	
 	
-	getAllTimeBest() {
+	getAllTimeBest() {		
 		fetch(`${baseUrl}/api/v1/scores.json`, {
 			credentials: 'same-origin',
       method: 'GET',
@@ -140,7 +141,7 @@ class GameContainer extends React.Component {
 		  .catch(function(error) {console.log(error)})
 	}
 	
-	getPersonalBest() {
+	getPersonalBest() {		
 		fetch(`${baseUrl}/api/v1/scores`,{
 			credentials: 'same-origin',
       method: 'GET',
@@ -190,7 +191,7 @@ class GameContainer extends React.Component {
 					this.setState({grid: newGrid, currentScore: newCurrentScore})
 				}	
 			}
-		}
+		}		
 		fetch(`${baseUrl}/api/v1/gamestates`, {
 			credentials: 'same-origin',
 			method: 'POST',
