@@ -33,7 +33,7 @@ class GameContainer extends React.Component {
 	}
 	
 	changeLevel(newLevel) {		
-		fetch(`${baseUrl}/api/v1/gamestates.json`, 
+		fetch(`${baseUrl}/api/v1/gamestates.json`, { 
 			credentials: 'same-origin',
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
