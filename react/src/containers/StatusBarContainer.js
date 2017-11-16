@@ -1,4 +1,5 @@
 import React from 'react'
+import baseUrl from '../constants/baseUrl'
 
 class StatusBarContainer extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class StatusBarContainer extends React.Component {
       fetch('{$baseUrl}/api/v1/gamestates.json', {
         credentials: 'same-origin',
         method: 'GET',
-        headers: {'Content-Type': 'application/jsonp'}
+        headers: {'Content-Type': 'application/json'}
       })
         .then(response => response.json())
         .then(body => {

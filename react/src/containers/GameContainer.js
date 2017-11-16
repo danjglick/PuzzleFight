@@ -1,6 +1,5 @@
 import React from 'react'
 import StatusBarContainer from './StatusBarContainer'
-
 import baseUrl from '../constants/baseUrl'
 
 class GameContainer extends React.Component {
@@ -36,7 +35,7 @@ class GameContainer extends React.Component {
 		fetch(`${baseUrl}/api/v1/gamestates.json`, { 
 			credentials: 'same-origin',
 			method: 'GET',
-			headers: {'Content-Type': 'application/jsonp'}
+			headers: {'Content-Type': 'application/json'}
 		})
 			.then(response => response.json())
 			.then(body => {this.setState({level: newLevel}, () => this.resetGame())})
@@ -50,7 +49,7 @@ class GameContainer extends React.Component {
 			fetch(`${baseUrl}/api/v1/gamestates.json`, {
 				credentials: 'same-origin',
 				method: 'GET',
-				headers: {'Content-Type': 'application/jsonp'}
+				headers: {'Content-Type': 'application/json'}
 			})
 				.then(response => response.json())
 				.then(body => {
@@ -99,7 +98,7 @@ class GameContainer extends React.Component {
 		fetch(`${baseUrl}/api/v1/gamestates.json`, { 
 			credentials: 'same-origin',
 			method: 'POST',
-			headers: {'Content-Type': 'application/jsonp'},
+			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({currentState: this.state})
 		})
 			.then(response => response.json())
@@ -110,7 +109,7 @@ class GameContainer extends React.Component {
 		fetch(`${baseUrl}/api/v1/scores.json`, { 
 			credentials: 'same-origin',
       method: 'GET',
-      headers: {'Content-Type': 'application/jsonp'}
+      headers: {'Content-Type': 'application/json'}
     })
 		  .then(response => response.json())
 		  .then(body => {
@@ -144,7 +143,7 @@ class GameContainer extends React.Component {
 		fetch(`${baseUrl}/api/v1/scores.json`, {
 			credentials: 'same-origin',
       method: 'GET',
-      headers: {'Content-Type': 'application/jsonp'}
+      headers: {'Content-Type': 'application/json'}
     })
 		  .then(response => response.json())
 		  .then(body => {
@@ -194,7 +193,7 @@ class GameContainer extends React.Component {
 		fetch(`${baseUrl}/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'POST',
-			headers: {'Content-Type': 'application/jsonp'},
+			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({currentState: this.state})
 		})
 			.then(response => response.json())
@@ -221,7 +220,7 @@ class GameContainer extends React.Component {
 			fetch(`${baseUrl}/api/v1/scores.json`, {
 				credentials: 'same-origin',
 	      method: 'POST',
-	      headers: {'Content-Type': 'application/jsonp'},
+	      headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
 					level: this.state.level, 
 					score: this.state.currentScore
