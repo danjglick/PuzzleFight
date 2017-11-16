@@ -13,7 +13,7 @@ class StatusBarContainer extends React.Component {
       fetch('{$baseUrl}.puzzle-fight.herokuapp.com}/api/v1/gamestates.json', {
         credentials: 'same-origin',
         method: 'GET',
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/jsonp'}
       })
         .then(response => response.json())
         .then(body => {
