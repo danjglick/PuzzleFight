@@ -10,7 +10,7 @@ class StatusBarContainer extends React.Component {
 
   componentWillMount() {
     if(!this.props.grid.includes('yellow')) {
-      fetch('puzzle-fight.herokuapp.com/api/v1/gamestates.json', {
+      fetch('{$baseUrl}.puzzle-fight.herokuapp.com}/api/v1/gamestates.json', {
         credentials: 'same-origin',
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
