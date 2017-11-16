@@ -33,7 +33,7 @@ class GameContainer extends React.Component {
 	}
 	
 	changeLevel(newLevel) {		
-		fetch(`${baseUrl}/api/v1/gamestates.jsonp`, { 
+		fetch(`${baseUrl}/api/v1/gamestates.json`, { 
 			credentials: 'same-origin',
 			method: 'GET',
 			headers: {'Content-Type': 'application/jsonp'}
@@ -47,7 +47,7 @@ class GameContainer extends React.Component {
 		this.getAllTimeBest()
 		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
-			fetch(`${baseUrl}/api/v1/gamestates.jsonp`, {
+			fetch(`${baseUrl}/api/v1/gamestates.json`, {
 				credentials: 'same-origin',
 				method: 'GET',
 				headers: {'Content-Type': 'application/jsonp'}
@@ -96,7 +96,7 @@ class GameContainer extends React.Component {
 				bluesLeft: newBluesLeft
 			})
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates`, { 
+		fetch(`${baseUrl}/api/v1/gamestates.json`, { 
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/jsonp'},
@@ -107,7 +107,7 @@ class GameContainer extends React.Component {
 	}	
 	
 	getAllTimeBest() {		
-		fetch(`${baseUrl}/api/v1/scores.jsonp`, { 
+		fetch(`${baseUrl}/api/v1/scores.json`, { 
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/jsonp'}
@@ -141,7 +141,7 @@ class GameContainer extends React.Component {
 	}
 	
 	getPersonalBest() {		
-		fetch(`${baseUrl}/api/v1/scores`, {
+		fetch(`${baseUrl}/api/v1/scores.json`, {
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/jsonp'}
@@ -191,7 +191,7 @@ class GameContainer extends React.Component {
 				}	
 			}
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates`, {
+		fetch(`${baseUrl}/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/jsonp'},
@@ -218,7 +218,7 @@ class GameContainer extends React.Component {
 				currentScore: this.state.currentScore,
 				level: this.state.level
 			})
-			fetch(`${baseUrl}/api/v1/scores.jsonp`, {
+			fetch(`${baseUrl}/api/v1/scores.json`, {
 				credentials: 'same-origin',
 	      method: 'POST',
 	      headers: {'Content-Type': 'application/jsonp'},
