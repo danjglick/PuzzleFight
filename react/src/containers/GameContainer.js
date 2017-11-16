@@ -33,7 +33,7 @@ class GameContainer extends React.Component {
 	}
 	
 	changeLevel(newLevel) {		
-		fetch(`${baseUrl}/api/v1/gamestates.json`, {
+		fetch(`puzzle-fight.herokuapp.com/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
@@ -47,7 +47,7 @@ class GameContainer extends React.Component {
 		this.getAllTimeBest()
 		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
-			fetch(`${baseUrl}/api/v1/gamestates.json`, {
+			fetch(`puzzle-fight.herokuapp.com/api/v1/gamestates.json`, {
 
 				credentials: 'same-origin',
 				method: 'GET',
@@ -97,7 +97,7 @@ class GameContainer extends React.Component {
 				bluesLeft: newBluesLeft
 			})
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates`, {
+		fetch(`puzzle-fight.herokuapp.com/api/v1/gamestates`, {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -108,7 +108,7 @@ class GameContainer extends React.Component {
 	}	
 	
 	getAllTimeBest() {		
-		fetch(`${baseUrl}/api/v1/scores.json`, {
+		fetch(`puzzle-fight.herokuapp.com/api/v1/scores.json`, {
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
@@ -142,7 +142,7 @@ class GameContainer extends React.Component {
 	}
 	
 	getPersonalBest() {		
-		fetch(`${baseUrl}/api/v1/scores`,{
+		fetch(`puzzle-fight.herokuapp.com/api/v1/scores`,{
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
@@ -192,7 +192,7 @@ class GameContainer extends React.Component {
 				}	
 			}
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates`, {
+		fetch(`puzzle-fight.herokuapp.com/api/v1/gamestates`, {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -219,7 +219,7 @@ class GameContainer extends React.Component {
 				currentScore: this.state.currentScore,
 				level: this.state.level
 			})
-			fetch(`${baseUrl}/api/v1/scores.json`, {
+			fetch(`puzzle-fight.herokuapp.com/api/v1/scores.json`, {
 				credentials: 'same-origin',
 	      method: 'POST',
 	      headers: {'Content-Type': 'application/json'},
