@@ -107,7 +107,7 @@ class GameContainer extends React.Component {
 	}	
 	
 	getAllTimeBest() {		
-		fetch(`${baseUrl}/api/v1/scores.json`, 
+		fetch(`${baseUrl}/api/v1/scores.json`, { 
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
