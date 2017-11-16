@@ -96,7 +96,7 @@ class GameContainer extends React.Component {
 				bluesLeft: newBluesLeft
 			})
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates`, 
+		fetch(`${baseUrl}/api/v1/gamestates`, { 
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -141,7 +141,7 @@ class GameContainer extends React.Component {
 	}
 	
 	getPersonalBest() {		
-		fetch(`${baseUrl}/api/v1/scores`,
+		fetch(`${baseUrl}/api/v1/scores`, {
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
