@@ -191,7 +191,7 @@ class GameContainer extends React.Component {
 				}	
 			}
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates`, 
+		fetch(`${baseUrl}/api/v1/gamestates`, {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
