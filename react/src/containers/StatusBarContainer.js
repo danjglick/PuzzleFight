@@ -14,7 +14,7 @@ class StatusBarContainer extends React.Component {
       fetch('{$baseUrl}/api/v1/gamestates.json', {
         credentials: 'same-origin',
         method: 'GET',
-        headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        headers: {'Content-Type': 'application/json'}
       })
         .then(response => response.json())
         .then(body => {
