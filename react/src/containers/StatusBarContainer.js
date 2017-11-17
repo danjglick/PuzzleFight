@@ -11,7 +11,7 @@ class StatusBarContainer extends React.Component {
 
   componentWillMount() {
     if(!this.props.grid.includes('yellow')) {
-      fetch('{$baseUrl}/api/v1/gamestates.json', {
+      fetch(`{$baseUrl}/api/v1/gamestates.json`, {
         credentials: 'same-origin',
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
