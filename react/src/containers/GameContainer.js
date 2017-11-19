@@ -244,7 +244,7 @@ class GameContainer extends React.Component {
 			}
 		}
 		if(redSpots.includes(newSpot)) {
-			var randNum = Math.floor((Math.random() * 5) + 1)
+			var randNum = Math.floor((Math.random() * 5))
 			var newCurrentScore = this.state.currentScore + randNum
 			this.setState({currentScore: newCurrentScore})
 		}
