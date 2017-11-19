@@ -15,7 +15,7 @@ class GameContainer extends React.Component {
 			playMode: false,
 			usernameAllTimeBest: 'n/a',
 			dateAllTimeBest: 'n/a',
-			firstTime: false,
+			randomizeBoard: false,
 			currentUser: null
 		}
 		this.changeLevel = this.changeLevel.bind(this)
@@ -43,29 +43,29 @@ class GameContainer extends React.Component {
 	}
 	
 	resetGame() {
+		this.setState({playMode: true})
 		this.getAllTimeBest()
 		this.getPersonalBest()
-		if(!this.state.grid.includes('yellow')) {
-			fetch(`${baseUrl}/api/v1/gamestates.json`, {
-				credentials: 'same-origin',
-				method: 'GET',
-				headers: {'Content-Type': 'application/json'}
+		fetch(`${baseUrl}/api/v1/gamestates.json`, {
+			credentials: 'same-origin',
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		})
+			.then(response => response.json())
+			.then(body => {
+				if(!this.state.grid.includes('yellow')
+				&& body[0].current_state.grid.includes('yellow')
+				&& !!this.state.currentUser
+				&& body[0].current_state.currentUser == this.state.currentUser) {
+					var savedState = body[0].current_state
+					this.setState(savedState)
+				} else {
+					this.setState({randomizeBoard: true})
+				}
 			})
-				.then(response => response.json())
-				.then(body => {
-					if(body[0].current_state.currentUser == this.state.currentUser 
-					&& body[0].current_state.grid.includes('yellow')
-					&& !!this.state.currentUser) {
-						var savedState = body[0].current_state
-						this.setState(savedState)
-					} else {
-						this.setState({firstTime: true})
-					}
-				})
-				.catch(function(error) {console.log(error)})
-		}
-		if(this.state.grid.includes('yellow') || this.state.firstTime == true) {
-			this.setState({playMode: true, firstTime: false})
+			.catch(function(error) {console.log(error)})
+		if(this.state.randomizeBoard == true) {
+			this.setState({randomizeBoard: false})
 			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
 			var yellowRandSpot = 0
