@@ -1,5 +1,4 @@
 import React from 'react'
-import baseUrl from '../constants/baseUrl'
 
 class StatusBarContainer extends React.Component {
   constructor(props) {
@@ -11,7 +10,7 @@ class StatusBarContainer extends React.Component {
 
   componentWillMount() {
     if(!this.props.grid.includes('yellow')) {
-      fetch(`{$baseUrl}/api/v1/gamestates.json`, {
+      fetch(`/api/v1/gamestates.json`, {
         credentials: 'same-origin',
         method: 'GET',
         headers: {'Content-Type': 'application/json'}

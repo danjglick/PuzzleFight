@@ -1,6 +1,5 @@
 import React from 'react'
 import StatusBarContainer from './StatusBarContainer'
-import baseUrl from '../constants/baseUrl'
 
 class GameContainer extends React.Component {
 	constructor(props) {
@@ -31,8 +30,8 @@ class GameContainer extends React.Component {
 		document.addEventListener('keydown', this.movePlayer)
 	}
 	
-	changeLevel(newLevel) {		
-		fetch(`${baseUrl}/api/v1/gamestates.json`, {
+	changeLevel(newLevel) {	
+		fetch(`/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
@@ -46,7 +45,7 @@ class GameContainer extends React.Component {
 		this.setState({playMode: true})
 		this.getAllTimeBest()
 		this.getPersonalBest()
-		fetch(`${baseUrl}/api/v1/gamestates.json`, {
+		fetch(`/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
@@ -95,7 +94,7 @@ class GameContainer extends React.Component {
 				bluesLeft: newBluesLeft
 			})
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates.json`, { 
+		fetch(`/api/v1/gamestates.json`, { 
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -106,7 +105,7 @@ class GameContainer extends React.Component {
 	}	
 	
 	getAllTimeBest() {		
-		fetch(`${baseUrl}/api/v1/scores.json`, { 
+		fetch(`/api/v1/scores.json`, { 
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
@@ -140,7 +139,7 @@ class GameContainer extends React.Component {
 	}
 	
 	getPersonalBest() {		
-		fetch(`${baseUrl}/api/v1/scores.json`, {
+		fetch(`/api/v1/scores.json`, {
 			credentials: 'same-origin',
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
@@ -190,7 +189,7 @@ class GameContainer extends React.Component {
 				}	
 			}
 		}		
-		fetch(`${baseUrl}/api/v1/gamestates.json`, {
+		fetch(`/api/v1/gamestates.json`, {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -217,7 +216,7 @@ class GameContainer extends React.Component {
 				currentScore: this.state.currentScore,
 				level: this.state.level
 			})
-			fetch(`${baseUrl}/api/v1/scores.json`, {
+			fetch(`/api/v1/scores.json`, {
 				credentials: 'same-origin',
 	      method: 'POST',
 	      headers: {'Content-Type': 'application/json'},
