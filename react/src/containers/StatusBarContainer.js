@@ -39,7 +39,11 @@ class StatusBarContainer extends React.Component {
     return (
       <div className='bar'>
         <form className='stat' onSubmit={this.handleSubmit}>
-          <input className='header start' type='submit' value='Start&nbsp;&nbsp;|'/>
+          <input 
+            className='header start' 
+            type='submit' 
+            value='Start&nbsp;&nbsp;|'
+          />
           <select value={this.state.value} onChange={this.handleChange}>
             <option value='1'>Level 1</option>
             <option value='2'>Level 2</option>
