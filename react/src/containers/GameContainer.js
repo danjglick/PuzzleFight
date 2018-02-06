@@ -31,7 +31,7 @@ class GameContainer extends React.Component {
 	}
 	
 	changeLevel(newLevel) {
-		fetch('http://localhost:3000/api/v1/gamestates.json', {
+		fetch('/api/v1/gamestates.json', {
 			credentials: 'same-origin',
 			method: 'GET',
 			headers: { 'Content-Type': 'application/json' }
@@ -52,7 +52,7 @@ class GameContainer extends React.Component {
 		this.getAllTimeBest()
 		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
-			fetch('http://localhost:3000/api/v1/gamestates.json', {
+			fetch('/api/v1/gamestates.json', {
 				credentials: 'same-origin',
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
@@ -112,7 +112,7 @@ class GameContainer extends React.Component {
 				bluesLeft: newBluesLeft
 			})
 		}
-		fetch('http://localhost:3000/api/v1/gamestates', {
+		fetch('/api/v1/gamestates', {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -125,7 +125,7 @@ class GameContainer extends React.Component {
 	}	
 	
 	getAllTimeBest() {
-		fetch('http://localhost:3000/api/v1/scores.json', {
+		fetch('/api/v1/scores.json', {
 			credentials: 'same-origin',
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -163,7 +163,7 @@ class GameContainer extends React.Component {
 	}
 	
 	getPersonalBest() {
-		fetch('http://localhost:3000/api/v1/scores', {
+		fetch('/api/v1/scores', {
 			credentials: 'same-origin',
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -226,7 +226,7 @@ class GameContainer extends React.Component {
 				}	
 			}
 		}
-		fetch('http://localhost:3000/api/v1/gamestates', {
+		fetch('/api/v1/gamestates', {
 			credentials: 'same-origin',
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -255,7 +255,7 @@ class GameContainer extends React.Component {
 				currentScore: this.state.currentScore,
 				level: this.state.level
 			})
-			fetch('http://localhost:3000/api/v1/scores.json', {
+			fetch('/api/v1/scores.json', {
 				credentials: 'same-origin',
 	      method: 'POST',
 	      headers: { 'Content-Type': 'application/json' },
