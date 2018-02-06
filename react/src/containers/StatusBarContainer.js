@@ -3,7 +3,7 @@ import React from 'react'
 class StatusBarContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {value: 1}
+    this.state = { value: 1 }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -13,20 +13,22 @@ class StatusBarContainer extends React.Component {
       fetch('http://localhost:3000/api/v1/gamestates.json', {
         credentials: 'same-origin',
         method: 'GET',
-        headers: {'Content-Type': 'application/json'}
+        headers: { 'Content-Type': 'application/json' }
       })
         .then(response => response.json())
         .then(body => {
           var level = body[0].current_state.level
-          this.state = {value: level}
+          this.state = { value: level }
         })
-        .catch(function(error) {console.log(error)})
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 
   handleChange(e) {
     e.preventDefault()
-    this.setState({value: e.target.value})
+    this.setState({ value: e.target.value })
   }
 
   handleSubmit(e) {

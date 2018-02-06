@@ -34,11 +34,18 @@ class GameContainer extends React.Component {
 		fetch('http://localhost:3000/api/v1/gamestates.json', {
 			credentials: 'same-origin',
 			method: 'GET',
-			headers: {'Content-Type': 'application/json'}
+			headers: { 'Content-Type': 'application/json' }
 		})
 			.then(response => response.json())
-			.then(body => {this.setState({level: newLevel}, () => this.resetGame())})
-			.catch(function(error) {console.log(error)})
+			.then(body => {
+				this.setState(
+					{ level: newLevel }, 
+					() => this.resetGame()
+				)
+			})
+			.catch(function(error) {
+				console.log(error)
+			})
 	}
 	
 	resetGame() {
@@ -48,23 +55,30 @@ class GameContainer extends React.Component {
 			fetch('http://localhost:3000/api/v1/gamestates.json', {
 				credentials: 'same-origin',
 				method: 'GET',
-				headers: {'Content-Type': 'application/json'}
+				headers: { 'Content-Type': 'application/json' }
 			})
 				.then(response => response.json())
 				.then(body => {
-					if(body[0].current_state.currentUser == this.state.currentUser 
-					&& body[0].current_state.grid.includes('yellow')
-					&& !!this.state.currentUser) {
+					if(
+						body[0].current_state.currentUser == this.state.currentUser 
+						&& body[0].current_state.grid.includes('yellow')
+						&& !!this.state.currentUser
+					) {
 						var savedState = body[0].current_state
 						this.setState(savedState)
 					} else {
-						this.setState({firstTime: true})
+						this.setState({ firstTime: true })
 					}
 				})
-				.catch(function(error) {console.log(error)})
+				.catch(function(error) {
+					console.log(error)
+				})
 		}
 		if(this.state.grid.includes('yellow') || this.state.firstTime == true) {
-			this.setState({playMode: true, firstTime: false})
+			this.setState({
+				playMode: true, 
+				firstTime: false
+			})
 			var newGrid = Array(64).fill(0)
 			var takenSpots = [0]
 			var yellowRandSpot = 0
@@ -82,9 +96,13 @@ class GameContainer extends React.Component {
 						randSpot = Math.floor((Math.random() * 64))
 					}
 					takenSpots.push(randSpot)
-					if(piece == 'yellow') newGrid[randSpot] = 'yellow' 
-					else if(piece == 'blue') newGrid[randSpot] = 'blue'
-					else if(piece == 'red') newGrid[randSpot] = 'red'
+					if(piece == 'yellow') {
+						newGrid[randSpot] = 'yellow'
+					} else if(piece == 'blue') {
+						newGrid[randSpot] = 'blue'
+					} else if(piece == 'red') {
+						newGrid[randSpot] = 'red'
+					}
 				}
 			}
 			var newBluesLeft = this.state.level
@@ -97,26 +115,30 @@ class GameContainer extends React.Component {
 		fetch('http://localhost:3000/api/v1/gamestates', {
 			credentials: 'same-origin',
 			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({currentState: this.state})
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ currentState: this.state })
 		})
 			.then(response => response.json())
-			.catch(function(error) {console.log(error)})
+			.catch(function(error) {
+				console.log(error)
+			})
 	}	
 	
 	getAllTimeBest() {
 		fetch('http://localhost:3000/api/v1/scores.json', {
 			credentials: 'same-origin',
       method: 'GET',
-      headers: {'Content-Type': 'application/json'}
+      headers: { 'Content-Type': 'application/json' }
     })
 		  .then(response => response.json())
 		  .then(body => {
 				var newAllTimeBest = 0
 				for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 					var userScore = body.all_scores[i]
-					if((userScore.level_id == this.state.level) 
-					&& (newAllTimeBest == 0 || userScore.score < newAllTimeBest)) {
+					if(
+						userScore.level_id == this.state.level 
+						&& (newAllTimeBest == 0 || userScore.score < newAllTimeBest) 
+					) {
 						newAllTimeBest = userScore.score
 						var newUsernameAllTimeBest = userScore.username
 						var newDateAllTimeBest = userScore.created_at.slice(0, 4)
@@ -135,14 +157,16 @@ class GameContainer extends React.Component {
 					})
 				}
 			})
-		  .catch(function(error) {console.log(error)})
+		  .catch(function(error) {
+				console.log(error)
+			})
 	}
 	
 	getPersonalBest() {
-		fetch('http://localhost:3000/api/v1/scores',{
+		fetch('http://localhost:3000/api/v1/scores', {
 			credentials: 'same-origin',
       method: 'GET',
-      headers: {'Content-Type': 'application/json'}
+      headers: { 'Content-Type': 'application/json' }
     })
 		  .then(response => response.json())
 		  .then(body => {
@@ -158,9 +182,14 @@ class GameContainer extends React.Component {
 						}
 					}
 				}
-				this.setState({personalBest: newPersonalBest, currentUser: newCurrentUser})
+				this.setState({
+					personalBest: newPersonalBest, 
+					currentUser: newCurrentUser
+				})
 			})
-		  .catch(function(error) {console.log(error)})	
+		  .catch(function(error) {
+				console.log(error)
+			})	
 	}
 	
 	movePlayer(e) {
@@ -174,10 +203,15 @@ class GameContainer extends React.Component {
 						var oldSpot = parseInt(grid.indexOf(spot))
 					}
 				}
-				if(e.keyCode == 37) var newSpot = oldSpot - 1
-				else if(e.keyCode == 38) var newSpot = oldSpot - 8
-				else if(e.keyCode == 39) var newSpot = oldSpot + 1
-				else if(e.keyCode == 40) var newSpot = oldSpot + 8
+				if(e.keyCode == 37) {
+					var newSpot = oldSpot - 1
+				} else if(e.keyCode == 38) {
+					var newSpot = oldSpot - 8
+				} else if(e.keyCode == 39) {
+					var newSpot = oldSpot + 1
+				} else if(e.keyCode == 40) {
+					var newSpot = oldSpot + 8
+				}
 				if(!(newSpot < 0 || newSpot > 63)) {
 					this.handleBlues(grid, newSpot)
 					this.handleReds(grid, newSpot)
@@ -185,18 +219,23 @@ class GameContainer extends React.Component {
 					newGrid[newSpot] = 'yellow'
 					newGrid[oldSpot] = 0
 					var newCurrentScore = this.state.currentScore + 1
-					this.setState({grid: newGrid, currentScore: newCurrentScore})
+					this.setState({
+						grid: newGrid, 
+						currentScore: newCurrentScore
+					})
 				}	
 			}
 		}
 		fetch('http://localhost:3000/api/v1/gamestates', {
 			credentials: 'same-origin',
 			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({currentState: this.state})
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ currentState: this.state })
 		})
 			.then(response => response.json())
-			.catch(function(error) {console.log(error)})
+			.catch(function(error) {
+				console.log(error)
+			})
 	}
 	
 	handleBlues(grid, newSpot) {
@@ -209,7 +248,7 @@ class GameContainer extends React.Component {
 		}
 		if(blueSpots.includes(newSpot)) {
 			var newBluesLeft = this.state.bluesLeft - 1
-			this.setState({bluesLeft: newBluesLeft})
+			this.setState({ bluesLeft: newBluesLeft })
 		}
 		if(newBluesLeft == 0) {
 			let payload = JSON.stringify({
@@ -219,18 +258,20 @@ class GameContainer extends React.Component {
 			fetch('http://localhost:3000/api/v1/scores.json', {
 				credentials: 'same-origin',
 	      method: 'POST',
-	      headers: {'Content-Type': 'application/json'},
+	      headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					level: this.state.level, 
 					score: this.state.currentScore
 				})
 	    })
-		  .then(response => response.json())
+		  	.then(response => response.json())
 				.then(body => {
 					this.getAllTimeBest()
 					this.getPersonalBest()
 				})
-			  .catch(function(error) {console.log(error)})
+			  .catch(function(error) {
+					console.log(error)
+				})
 		}
 	}	
 	
@@ -245,7 +286,7 @@ class GameContainer extends React.Component {
 		if(redSpots.includes(newSpot)) {
 			var randNum = Math.floor((Math.random() * 5) + 1)
 			var newCurrentScore = this.state.currentScore + randNum
-			this.setState({currentScore: newCurrentScore})
+			this.setState({ currentScore: newCurrentScore })
 		}
 	}
 			
