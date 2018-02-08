@@ -1,1 +1,2 @@
-# PuzzleFight
+For my solo Launch Academy project, I built PuzzleFight, an original puzzle game with a Rails backend and a React frontend. Players use the keyboard to move a game-piece through increasingly complex levels. The goal is to capture all of the blue pieces in as few moves as possible - but capture a red piece, and your number-of-moves randomly increases. If you're in the middle of the game, or playing for the first time, the 'Start' button simply randomizes the puzzle. Alternatively - if the last time you played, you left in the middle of a game - the 'Start' button returns the game to the exact state you left it in. Signing in using the Devise library allows a player to compete for all-time and personal best scores, both of which update instantly.
+
