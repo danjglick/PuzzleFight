@@ -59,8 +59,11 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
+					console.log(!!this.state.currentUser)
 					if(
+						// below line evalues to true
 						body[0].current_state.currentUser == this.state.currentUser 
+						// below 2 lines evaluates to false
 						&& body[0].current_state.grid.includes('yellow')
 						&& !!this.state.currentUser
 					) {
