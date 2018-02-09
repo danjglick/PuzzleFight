@@ -59,11 +59,8 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
-					console.log(!!this.state.currentUser)
 					if(
-						// below line evalues to true
-						body[0].current_state.currentUser == this.state.currentUser 
-						// below 2 lines evaluates to false
+						body[0].current_state.currentUser == this.state.currentUser
 						&& body[0].current_state.grid.includes('yellow')
 						&& !!this.state.currentUser
 					) {
@@ -179,8 +176,10 @@ class GameContainer extends React.Component {
 					newCurrentUser = body.current_user.username
 					for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 						var userScore = body.all_scores[i]
-						if(userScore.user_id == body.current_user.id 
-						&& userScore.level_id == this.state.level) {
+						if(
+							userScore.user_id == body.current_user.id 
+							&& userScore.level_id == this.state.level
+						) {
 							newPersonalBest = userScore.score
 						}
 					}

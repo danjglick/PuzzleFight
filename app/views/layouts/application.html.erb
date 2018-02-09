@@ -15,9 +15,9 @@
           <p>(2) Use the arrow-keys to move the yellow piece around the board.</p> 
           <p>(3) Your goal is to capture all of the blue pieces in as few moves as possible.</p> 
           <p>(4) If you accidentally capture a red piece, your score will increase by a random number between 2 and 5.</p> 
-          <p>(5) Click 'Start' again at any time to strategically randomize the puzzle.</p>
-          <p>(6) Sign-in to compete for personal and all-time best scores, which update instantly.</p> 
-          <p>(7) Don't worry about leaving the game: your progress is always saved automatically. </p>   
+          <p>(5) Click 'Start' again at any time to strategically re-randomize the puzzle.</p>
+          <p>(6) Register to compete for personal and all-time best scores, both of which update instantly.</p> 
+          <p>(7) Don't worry about leaving the game; your progress is always saved automatically.</p>   
         </div>
       </div>
       <h1 class='logoBar'>PuzzleFight</h1>
@@ -29,8 +29,8 @@
         <% end %>
         <div class='dropdown-content'>  
           <% if user_signed_in? %>
-            <ul><%= link_to 'Update Account', edit_user_registration_path, method: :get %></ul>
             <ul><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></ul>
+            <ul><%= link_to 'Update/Cancel Account', edit_user_registration_path, method: :get %></ul>
           <% else %>
             <ul><%= link_to 'Sign In', new_user_session_path %></ul>
             <ul><%= link_to 'Sign Up', new_user_registration_path %></ul>

@@ -34,6 +34,9 @@ class Api::V1::ScoresController < ApplicationController
         )
       end
     end
-    render json: {level: params[:level], score: params[:score]}
+    render json: { 
+      level: params[:level], 
+      score: params[:score] 
+    }
   end
 end
