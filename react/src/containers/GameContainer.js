@@ -31,6 +31,7 @@ class GameContainer extends React.Component {
 	}
 	
 	changeLevel(newLevel) {
+		this.resetGame()
 		fetch('/api/v1/gamestates.json', {
 			credentials: 'same-origin',
 			method: 'GET',
@@ -38,10 +39,7 @@ class GameContainer extends React.Component {
 		})
 			.then(response => response.json())
 			.then(body => {
-				this.setState(
-					{ level: newLevel }, 
-					() => this.resetGame()
-				)
+				this.setState({ level: newLevel })
 			})
 			.catch(function(error) {
 				console.log(error)
@@ -50,7 +48,6 @@ class GameContainer extends React.Component {
 	
 	resetGame() {
 		this.getAllTimeBest()
-		this.getPersonalBest()
 		if(!this.state.grid.includes('yellow')) {
 			fetch('/api/v1/gamestates.json', {
 				credentials: 'same-origin',
@@ -59,14 +56,20 @@ class GameContainer extends React.Component {
 			})
 				.then(response => response.json())
 				.then(body => {
+					this.getPersonalBest()
+				})
+				.then(body => {
+					console.log('resetGame() needs this.state.currentUser, which is:', this.state.currentUser)
 					if(
-						body[0].current_state.currentUser == this.state.currentUser
-						&& body[0].current_state.grid.includes('yellow')
-						&& !!this.state.currentUser
+						!!this.state.currentUser //false
+						&& this.state.currentUser == body[0].current_state.currentUser //false
+						&& body[0].current_state.grid.includes('yellow') //true
 					) {
+						console.log('game reset properly')
 						var savedState = body[0].current_state
 						this.setState(savedState)
 					} else {
+						console.log('game DID NOT reset properly')
 						this.setState({ firstTime: true })
 					}
 				})
@@ -173,16 +176,16 @@ class GameContainer extends React.Component {
 				var newPersonalBest = 0
 				var newCurrentUser = null
 				if(body.current_user) {
+					console.log('getPersonalBest() succeeded')
 					newCurrentUser = body.current_user.username
 					for(var i=0; i<Object.keys(body.all_scores).length; i++) {
 						var userScore = body.all_scores[i]
-						if(
-							userScore.user_id == body.current_user.id 
-							&& userScore.level_id == this.state.level
-						) {
+						if(userScore.user_id == body.current_user.id && userScore.level_id == this.state.level) {
 							newPersonalBest = userScore.score
 						}
 					}
+				} else {
+					console.log('getPersonalBest() DID NOT succeed')
 				}
 				this.setState({
 					personalBest: newPersonalBest, 
@@ -191,7 +194,8 @@ class GameContainer extends React.Component {
 			})
 		  .catch(function(error) {
 				console.log(error)
-			})	
+			})
+		console.log('getPersonalBest is done running now, so this.state.currentUser should be not-null. It is:', this.state.currentUser)	
 	}
 	
 	movePlayer(e) {
